@@ -1,4 +1,4 @@
-# roject Title: CircleSence
+# Project Title: CircleSence
 
 ## Members:
 
