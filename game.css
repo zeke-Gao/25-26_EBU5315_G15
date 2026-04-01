@@ -1,0 +1,676 @@
+.game-root {
+  max-width: 1680px;
+  margin: 0 auto;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.game-root .is-hidden {
+  display: none !important;
+}
+
+.game-root .btn {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #9eb3cf;
+}
+
+.game-root .btn.primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
+.game-root .btn.ghost {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  border: 1px solid #9eb3cf;
+}
+
+.game-toolbar {
+  border: 1px solid #c3d1e3;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fbfdff, #eef4fb);
+  color: #0f172a;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  box-shadow: 0 10px 28px rgba(78, 107, 151, 0.12);
+}
+
+.game-kicker {
+  margin: 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  color: #0369a1;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.game-toolbar-title h1 {
+  margin: 0.24rem 0 0.34rem;
+  font-size: clamp(1.2rem, 2.3vw, 1.65rem);
+  color: #0f172a;
+}
+
+.game-sub {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #334155;
+  max-width: 780px;
+}
+
+.game-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.game-tab-btn.is-active {
+  background: #0ea5e9 !important;
+  border-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+.game-root .btn:hover {
+  border-color: #6f8fb7;
+  background: #f5f9ff;
+}
+
+.game-root .btn:focus-visible {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+}
+
+.game-workspace {
+  position: relative;
+  border: 1px solid #c3d1e3;
+  border-radius: 14px;
+  overflow: hidden;
+  height: clamp(580px, 74vh, 860px);
+  background: linear-gradient(180deg, #f5f9ff, #edf3fb);
+}
+
+.game-left-panel {
+  position: absolute;
+  z-index: 5;
+  top: 0.7rem;
+  left: 0.7rem;
+  bottom: 0.7rem;
+  width: clamp(290px, 29vw, 420px);
+  background: rgba(255, 255, 255, 0.93);
+  border: 1px solid #c9d8eb;
+  border-radius: 12px;
+  color: #0f172a;
+  padding: 0.62rem;
+  overflow-y: auto;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 16px 32px rgba(37, 61, 97, 0.2);
+}
+
+.game-left-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.game-left-panel::-webkit-scrollbar-thumb {
+  background: #9cb6d9;
+  border-radius: 6px;
+}
+
+.game-left-panel::-webkit-scrollbar-track {
+  background: #e8f0fb;
+}
+
+.game-card {
+  border: 1px solid #d7e4f5;
+  border-radius: 10px;
+  background: #f7fbff;
+  padding: 0.56rem;
+}
+
+.game-card + .game-card {
+  margin-top: 0.56rem;
+}
+
+.game-card h2 {
+  margin: 0 0 0.44rem;
+  font-size: 0.95rem;
+  color: #0f3e75;
+}
+
+.mode-text {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #1e3a5f;
+}
+
+.mode-text + .mode-text {
+  margin-top: 0.32rem;
+}
+
+.slider-list {
+  display: grid;
+  gap: 0.24rem;
+}
+
+.slider-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: #1e293b;
+}
+
+.slider-item output {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #0284c7;
+}
+
+.slider-list input[type="range"] {
+  width: 100%;
+  margin: 0 0 0.2rem;
+  accent-color: #0284c7;
+}
+
+.equation-card p {
+  margin: 0 0 0.32rem;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #0f172a;
+}
+
+.equation-card code {
+  display: inline-block;
+  background: #ffffff;
+  border: 1px solid #d2dff0;
+  color: #1e293b;
+  border-radius: 6px;
+  padding: 0.08rem 0.24rem;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.challenge-metrics {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.challenge-metrics p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #0f172a;
+}
+
+.target-grid {
+  margin-top: 0.44rem;
+  border: 1px solid #cddcef;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.target-row {
+  display: grid;
+  grid-template-columns: 0.95fr 1fr 1fr;
+  gap: 0.3rem;
+  padding: 0.24rem 0.4rem;
+  font-size: 0.78rem;
+  border-bottom: 1px solid #e4edf8;
+  align-items: center;
+  background: #ffffff;
+}
+
+.target-row:last-child {
+  border-bottom: 0;
+}
+
+.target-row.header {
+  background: #e8f3ff;
+  color: #0f4a85;
+  font-weight: 600;
+}
+
+.target-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.target-row .delta-good {
+  color: #059669;
+}
+
+.target-row .delta-mid {
+  color: #d97706;
+}
+
+.target-row .delta-bad {
+  color: #dc2626;
+}
+
+.panel-actions {
+  margin-top: 0.48rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.34rem;
+}
+
+.game-right-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
+  padding: 0.72rem;
+  transition: margin-left 0.24s ease;
+}
+
+.game-root:not(.panel-collapsed) .game-right-panel {
+  margin-left: clamp(300px, 31vw, 430px);
+}
+
+.game-reopen-btn {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 3;
+  box-shadow: 0 8px 20px rgba(41, 70, 111, 0.18);
+}
+
+.game-canvas-wrap {
+  flex: 1;
+  min-height: 420px;
+  border: 1px solid #c9d8eb;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+#goose-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas-caption {
+  margin: 0.6rem 0 0;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.86rem;
+  color: #334155;
+  border: 1px dashed #b7cae4;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.game-root.panel-collapsed .game-left-panel {
+  display: none;
+}
+
+.game-root.panel-collapsed .game-right-panel {
+  margin-left: 0;
+}
+
+.game-root.panel-collapsed .game-reopen-btn {
+  display: inline-flex !important;
+}
+
+[data-theme="dark"] .game-root .btn {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .game-root .btn.ghost {
+  background: rgba(15, 23, 42, 0.88);
+  color: #e2e8f0;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .game-root .btn:hover {
+  background: #162136;
+  border-color: #4b6586;
+}
+
+[data-theme="dark"] .game-toolbar {
+  border-color: #334155;
+  background: linear-gradient(180deg, #0f172a, #08101f);
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .game-kicker {
+  color: #67e8f9;
+}
+
+[data-theme="dark"] .game-toolbar-title h1 {
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .game-sub {
+  color: #93accb;
+}
+
+[data-theme="dark"] .game-workspace {
+  border-color: #334155;
+  background: linear-gradient(180deg, #0c1525, #071122);
+}
+
+[data-theme="dark"] .game-left-panel {
+  background: rgba(15, 23, 42, 0.93);
+  border-color: #2d3b53;
+  color: #e2e8f0;
+  box-shadow: 0 16px 32px rgba(2, 8, 23, 0.45);
+}
+
+[data-theme="dark"] .game-left-panel::-webkit-scrollbar-thumb {
+  background: #4b6586;
+}
+
+[data-theme="dark"] .game-left-panel::-webkit-scrollbar-track {
+  background: #0b1220;
+}
+
+[data-theme="dark"] .game-card {
+  border-color: #304560;
+  background: #111c32;
+}
+
+[data-theme="dark"] .game-card h2 {
+  color: #bfdbfe;
+}
+
+[data-theme="dark"] .mode-text,
+[data-theme="dark"] .slider-item,
+[data-theme="dark"] .equation-card p,
+[data-theme="dark"] .challenge-metrics p,
+[data-theme="dark"] .canvas-caption {
+  color: #dbeafe;
+}
+
+[data-theme="dark"] .slider-item output {
+  color: #67e8f9;
+}
+
+[data-theme="dark"] .slider-list input[type="range"] {
+  accent-color: #22d3ee;
+}
+
+[data-theme="dark"] .equation-card code {
+  background: #0b1220;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .target-grid {
+  border-color: #334155;
+}
+
+[data-theme="dark"] .target-row {
+  border-bottom-color: #26364d;
+  background: #0e172b;
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .target-row.header {
+  background: #13253f;
+  color: #67e8f9;
+}
+
+[data-theme="dark"] .target-row .delta-good {
+  color: #34d399;
+}
+
+[data-theme="dark"] .target-row .delta-mid {
+  color: #fbbf24;
+}
+
+[data-theme="dark"] .target-row .delta-bad {
+  color: #f87171;
+}
+
+[data-theme="dark"] .game-canvas-wrap {
+  border-color: #334155;
+  background: #020617;
+}
+
+[data-theme="dark"] .canvas-caption {
+  border-color: #334155;
+  background: rgba(15, 23, 42, 0.82);
+}
+
+[data-contrast="cb"] .game-root .btn {
+  background: #fffaf0;
+  color: #1f1a00;
+  border-color: #9b7f1f;
+}
+
+[data-contrast="cb"] .game-root .btn.ghost {
+  background: #fffaf0;
+  color: #1f1a00;
+  border-color: #9b7f1f;
+}
+
+[data-contrast="cb"] .game-root .btn.primary {
+  background: #005eb8;
+  border-color: #005eb8;
+  color: #ffffff;
+}
+
+[data-contrast="cb"] .game-tab-btn.is-active {
+  background: #d94801 !important;
+  border-color: #b63d00 !important;
+  color: #ffffff !important;
+}
+
+[data-contrast="cb"] .game-toolbar {
+  border-color: #d8c77c;
+  background: linear-gradient(180deg, #fffdf6, #fdf7df);
+  color: #2b1f00;
+}
+
+[data-contrast="cb"] .game-kicker {
+  color: #6c5200;
+}
+
+[data-contrast="cb"] .game-toolbar-title h1,
+[data-contrast="cb"] .game-sub {
+  color: #2b1f00;
+}
+
+[data-contrast="cb"] .game-workspace {
+  border-color: #d8c77c;
+  background: linear-gradient(180deg, #fffdf6, #f9f2d8);
+}
+
+[data-contrast="cb"] .game-left-panel {
+  background: rgba(255, 250, 235, 0.95);
+  border-color: #d3bc67;
+  box-shadow: 0 16px 32px rgba(120, 96, 26, 0.25);
+}
+
+[data-contrast="cb"] .game-left-panel::-webkit-scrollbar-thumb {
+  background: #b89b3f;
+}
+
+[data-contrast="cb"] .game-left-panel::-webkit-scrollbar-track {
+  background: #f4eac4;
+}
+
+[data-contrast="cb"] .game-card {
+  border-color: #dbc987;
+  background: #fffdf2;
+}
+
+[data-contrast="cb"] .game-card h2,
+[data-contrast="cb"] .mode-text,
+[data-contrast="cb"] .slider-item,
+[data-contrast="cb"] .equation-card p,
+[data-contrast="cb"] .challenge-metrics p,
+[data-contrast="cb"] .canvas-caption {
+  color: #2b1f00;
+}
+
+[data-contrast="cb"] .slider-item output {
+  color: #005eb8;
+}
+
+[data-contrast="cb"] .slider-list input[type="range"] {
+  accent-color: #d94801;
+}
+
+[data-contrast="cb"] .equation-card code {
+  background: #fffaf0;
+  border-color: #d3bc67;
+  color: #2b1f00;
+}
+
+[data-contrast="cb"] .target-grid {
+  border-color: #d3bc67;
+}
+
+[data-contrast="cb"] .target-row {
+  border-bottom-color: #eadca6;
+  background: #fffef8;
+}
+
+[data-contrast="cb"] .target-row.header {
+  background: #f5e7b3;
+  color: #4b3900;
+}
+
+[data-contrast="cb"] .target-row .delta-good {
+  color: #005eb8;
+}
+
+[data-contrast="cb"] .target-row .delta-mid {
+  color: #8a6a00;
+}
+
+[data-contrast="cb"] .target-row .delta-bad {
+  color: #d94801;
+}
+
+[data-contrast="cb"] .game-canvas-wrap {
+  border-color: #d3bc67;
+  background: #fffdf6;
+}
+
+[data-contrast="cb"] .canvas-caption {
+  border-color: #d3bc67;
+  background: rgba(255, 250, 235, 0.9);
+}
+
+/* =========================================================
+   终极修复：CSS 优先级覆盖漏洞 (修复色弱模式下的视觉冲突)
+   ========================================================= */
+
+/* ---------------------------------------------------
+   Bug 修复 A：明亮主题 + 色弱模式 (针对你截图里的状态)
+   面板可以保持黄色，但必须把所有文字强制变黑，确保看清！
+   --------------------------------------------------- */
+body[data-theme="light"][data-contrast="cb"] .game-left-panel :not(code, .target-row.header) {
+  color: #000 !important; /* 强制所有文本变黑，除了代码块和表格头 */
+}
+
+/* 确保公式卡片里的代码块有足够的对比度 */
+body[data-theme="light"][data-contrast="cb"] .equation-card code {
+  color: #e11d48; /* 公式变成深红色，在这个黄色底上极其清晰 */
+  background: #fefce8;
+  border-color: #fcd34d;
+}
+
+/* ---------------------------------------------------
+   Bug 修复 B：深色主题 + 色弱模式 (这是你最初想要的效果)
+   当两个状态叠加时，强制把黄色底刷成深灰蓝，文字刷成明黄色。
+   --------------------------------------------------- */
+body[data-theme="dark"][data-contrast="cb"] .game-left-panel,
+body[data-theme="dark"][data-contrast="cb"] .game-workspace,
+body[data-theme="dark"][data-contrast="cb"] .game-card {
+  background: #0a0e14 !important; /* 强制深色底 */
+  border-color: #9b7f1f;
+  color: #fef9c3 !important; /* 强制所有文字变高对比浅黄白 */
+}
+
+/* 深色+色弱下，强制所有卡片内部元素也变成浅色 */
+body[data-theme="dark"][data-contrast="cb"] .game-card :not(pre, code, .header) {
+  color: #fef9c3 !important;
+}
+
+/* 公式卡片在深色色弱下的样子 */
+body[data-theme="dark"][data-contrast="cb"] .equation-card code {
+  color: #fef9c3;
+  background: #020617;
+  border-color: #7a6316;
+}
+
+/* ---------------------------------------------------
+   Bug 修复 B：深色主题 + 色弱模式（终极重锤版）
+   彻底抹杀所有浅黄色渐变背景，强制换成极暗夜深灰！
+   --------------------------------------------------- */
+body[data-theme="dark"][data-contrast="cb"] .game-toolbar,
+body[data-theme="dark"][data-contrast="cb"] .game-workspace,
+body[data-theme="dark"][data-contrast="cb"] .game-left-panel,
+body[data-theme="dark"][data-contrast="cb"] .game-card,
+body[data-theme="dark"][data-contrast="cb"] .game-canvas-wrap,
+body[data-theme="dark"][data-contrast="cb"] .canvas-caption,
+body[data-theme="dark"][data-contrast="cb"] .target-row {
+  background: #070b12 !important; /* 极度深邃的暗夜蓝黑 */
+  background-image: none !important; /* 核心大招：杀掉原来的浅黄渐变色！ */
+  border-color: #7a6316 !important; /* 边框保留暗金质感 */
+  color: #fef9c3 !important; /* 强制文字变成高对比浅黄 */
+}
+
+/* 强制顶部标题栏所有文字变色 */
+body[data-theme="dark"][data-contrast="cb"] .game-toolbar-title h1,
+body[data-theme="dark"][data-contrast="cb"] .game-sub,
+body[data-theme="dark"][data-contrast="cb"] .game-kicker {
+  color: #fef9c3 !important;
+}
+
+/* 深色+色弱下，强制左侧控制台所有文字变浅色 */
+body[data-theme="dark"][data-contrast="cb"] .game-card :not(pre, code, .header) {
+  color: #fef9c3 !important;
+}
+
+/* 公式代码框在深色色弱下的极客质感 */
+body[data-theme="dark"][data-contrast="cb"] .equation-card code {
+  color: #fde047 !important; /* 亮明黄色代码，极致清晰 */
+  background: #000000 !important; /* 纯黑底色 */
+  border-color: #9b7f1f !important;
+}
+
+@media (max-width: 1240px) {
+  .game-toolbar {
+    flex-direction: column;
+  }
+
+  .game-toolbar-actions {
+    justify-content: flex-start;
+  }
+
+  .game-root:not(.panel-collapsed) .game-right-panel {
+    margin-left: clamp(250px, 28vw, 350px);
+  }
+}
+
+@media (max-width: 940px) {
+  .game-workspace {
+    height: clamp(520px, 70vh, 760px);
+  }
+
+  .game-left-panel {
+    width: min(86vw, 420px);
+  }
+
+  .game-root:not(.panel-collapsed) .game-right-panel {
+    margin-left: 0;
+  }
+
+  .game-canvas-wrap {
+    min-height: 360px;
+  }
+}
