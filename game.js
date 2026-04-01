@@ -159,6 +159,19 @@
     target: "#d94801",
   };
 
+  const PALETTE_CB_DARK = {
+    canvasBg: "#070b12",
+    axis: "#b89b3f",
+    major: "#6e612f",
+    minor: "#3f3a22",
+    tick: "#fef9c3",
+    legendBg: "rgba(7,11,18,0.88)",
+    legendText: "#fef9c3",
+    player: "#60a5fa",
+    playerFill: "rgba(96,165,250,0.13)",
+    target: "#fb923c",
+  };
+
   const state = {
     mode: "sandbox",
     panelCollapsed: false,
@@ -221,9 +234,7 @@
   }
 
   function palette() {
-    // 增加这一行：当同时开启暗黑+色弱时，强制使用暗黑画板配色
-    if (isDarkThemeMode() && isColorBlindMode()) return PALETTE_DARK; 
-    
+    if (isDarkThemeMode() && isColorBlindMode()) return PALETTE_CB_DARK;
     if (isColorBlindMode()) return PALETTE_CB;
     if (isDarkThemeMode()) return PALETTE_DARK;
     return PALETTE_NORMAL;

@@ -564,83 +564,59 @@
   background: rgba(255, 250, 235, 0.9);
 }
 
-/* =========================================================
-   终极修复：CSS 优先级覆盖漏洞 (修复色弱模式下的视觉冲突)
-   ========================================================= */
-
-/* ---------------------------------------------------
-   Bug 修复 A：明亮主题 + 色弱模式 (针对你截图里的状态)
-   面板可以保持黄色，但必须把所有文字强制变黑，确保看清！
-   --------------------------------------------------- */
-body[data-theme="light"][data-contrast="cb"] .game-left-panel :not(code, .target-row.header) {
-  color: #000 !important; /* 强制所有文本变黑，除了代码块和表格头 */
-}
-
-/* 确保公式卡片里的代码块有足够的对比度 */
-body[data-theme="light"][data-contrast="cb"] .equation-card code {
-  color: #e11d48; /* 公式变成深红色，在这个黄色底上极其清晰 */
-  background: #fefce8;
-  border-color: #fcd34d;
-}
-
-/* ---------------------------------------------------
-   Bug 修复 B：深色主题 + 色弱模式 (这是你最初想要的效果)
-   当两个状态叠加时，强制把黄色底刷成深灰蓝，文字刷成明黄色。
-   --------------------------------------------------- */
-body[data-theme="dark"][data-contrast="cb"] .game-left-panel,
-body[data-theme="dark"][data-contrast="cb"] .game-workspace,
-body[data-theme="dark"][data-contrast="cb"] .game-card {
-  background: #0a0e14 !important; /* 强制深色底 */
-  border-color: #9b7f1f;
-  color: #fef9c3 !important; /* 强制所有文字变高对比浅黄白 */
-}
-
-/* 深色+色弱下，强制所有卡片内部元素也变成浅色 */
-body[data-theme="dark"][data-contrast="cb"] .game-card :not(pre, code, .header) {
+/* 深色主题 + 色弱模式：使用偏深、无障碍的专用配色 */
+body[data-theme="dark"][data-contrast="cb"] .game-toolbar {
+  background: linear-gradient(180deg, #111014, #070b12) !important;
+  background-image: none !important;
+  border-color: #7a6316 !important;
   color: #fef9c3 !important;
 }
 
-/* 公式卡片在深色色弱下的样子 */
-body[data-theme="dark"][data-contrast="cb"] .equation-card code {
-  color: #fef9c3;
-  background: #020617;
-  border-color: #7a6316;
-}
-
-/* ---------------------------------------------------
-   Bug 修复 B：深色主题 + 色弱模式（终极重锤版）
-   彻底抹杀所有浅黄色渐变背景，强制换成极暗夜深灰！
-   --------------------------------------------------- */
-body[data-theme="dark"][data-contrast="cb"] .game-toolbar,
 body[data-theme="dark"][data-contrast="cb"] .game-workspace,
 body[data-theme="dark"][data-contrast="cb"] .game-left-panel,
 body[data-theme="dark"][data-contrast="cb"] .game-card,
 body[data-theme="dark"][data-contrast="cb"] .game-canvas-wrap,
 body[data-theme="dark"][data-contrast="cb"] .canvas-caption,
 body[data-theme="dark"][data-contrast="cb"] .target-row {
-  background: #070b12 !important; /* 极度深邃的暗夜蓝黑 */
-  background-image: none !important; /* 核心大招：杀掉原来的浅黄渐变色！ */
-  border-color: #7a6316 !important; /* 边框保留暗金质感 */
-  color: #fef9c3 !important; /* 强制文字变成高对比浅黄 */
+  background: #070b12 !important;
+  background-image: none !important;
+  border-color: #7a6316 !important;
 }
 
-/* 强制顶部标题栏所有文字变色 */
+body[data-theme="dark"][data-contrast="cb"] .game-kicker,
 body[data-theme="dark"][data-contrast="cb"] .game-toolbar-title h1,
 body[data-theme="dark"][data-contrast="cb"] .game-sub,
-body[data-theme="dark"][data-contrast="cb"] .game-kicker {
+body[data-theme="dark"][data-contrast="cb"] .mode-text,
+body[data-theme="dark"][data-contrast="cb"] .slider-item,
+body[data-theme="dark"][data-contrast="cb"] .equation-card p,
+body[data-theme="dark"][data-contrast="cb"] .challenge-metrics p,
+body[data-theme="dark"][data-contrast="cb"] .canvas-caption,
+body[data-theme="dark"][data-contrast="cb"] .target-row {
   color: #fef9c3 !important;
 }
 
-/* 深色+色弱下，强制左侧控制台所有文字变浅色 */
-body[data-theme="dark"][data-contrast="cb"] .game-card :not(pre, code, .header) {
-  color: #fef9c3 !important;
+body[data-theme="dark"][data-contrast="cb"] .target-row.header {
+  background: #1a1508 !important;
+  color: #fde68a !important;
 }
 
-/* 公式代码框在深色色弱下的极客质感 */
 body[data-theme="dark"][data-contrast="cb"] .equation-card code {
-  color: #fde047 !important; /* 亮明黄色代码，极致清晰 */
-  background: #000000 !important; /* 纯黑底色 */
+  color: #fde047 !important;
+  background: #000000 !important;
   border-color: #9b7f1f !important;
+}
+
+/* 保留 delta 误差语义：小/中/大误差颜色必须可区分 */
+body[data-theme="dark"][data-contrast="cb"] .target-row .delta-good {
+  color: #60a5fa !important;
+}
+
+body[data-theme="dark"][data-contrast="cb"] .target-row .delta-mid {
+  color: #facc15 !important;
+}
+
+body[data-theme="dark"][data-contrast="cb"] .target-row .delta-bad {
+  color: #fb923c !important;
 }
 
 @media (max-width: 1240px) {
