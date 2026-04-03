@@ -1,0 +1,283 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CircleSense | Circle Geometry for Teens</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="light" data-font="md" data-contrast="normal" data-lang="en">
+    <header class="site-header">
+      <!-- Header Icon/Logo -->
+      <a class="logo" href="index.html" aria-label="CircleSense homepage">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text" data-i18n="brand">CircleSense</span>
+      </a>
+
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html" data-i18n="breadcrumb_home">Home</a>
+      </nav>
+
+      <!-- Accessibility & Tools Bar -->
+      <div class="tools" role="group" aria-label="Accessibility tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false">
+          <!-- Dark Mode Toggle -->
+          Theme: Light
+        </button>
+        <button class="tool-btn" id="font-toggle" aria-pressed="false">
+          <!-- Font Size Toggle -->
+          Font: Normal
+        </button>
+        <a class="tool-btn" href="index-zh.html">中文</a>
+        <button class="tool-btn" id="cb-toggle" aria-pressed="false">
+          <!-- Color-blind Friendly Toggle -->
+          Color: Standard
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero" id="top">
+        <div class="hero-content">
+          <p class="hero-kicker" data-i18n="hero_kicker">Circle Geometry • Visual • Interactive</p>
+          <h1 data-i18n="hero_title">Master Circle Geometry with interactive games and quiz</h1>
+          <p class="hero-sub" data-i18n="hero_sub">
+            Learn theorems fast with cinematic visuals, bite-sized rules, and
+            instant feedback designed for high school success.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#knowledge" data-i18n="hero_cta_primary">Start Learning</a>
+            <a class="btn ghost" href="#carousel" data-i18n="hero_cta_secondary">Watch the Concepts</a>
+          </div>
+          <div class="hero-badges" aria-label="Highlights">
+            <span class="badge" data-i18n="hero_badge_1">Angles & arcs</span>
+            <span class="badge" data-i18n="hero_badge_2">Tangent tricks</span>
+            <span class="badge" data-i18n="hero_badge_3">Cyclic proofs</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 320" role="img" aria-label="Circle diagram">
+            <defs>
+              <linearGradient id="glow" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--accent)" />
+                <stop offset="100%" stop-color="var(--primary)" />
+              </linearGradient>
+            </defs>
+            <circle cx="160" cy="160" r="120" fill="none" stroke="url(#glow)" stroke-width="6" />
+            <line
+              x1="40"
+              y1="160"
+              x2="280"
+              y2="160"
+              stroke="var(--line)"
+              stroke-width="3.2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="160"
+              y1="40"
+              x2="160"
+              y2="280"
+              stroke="var(--line)"
+              stroke-width="1.6"
+              stroke-dasharray="4 4"
+              stroke-opacity="0.5"
+            />
+            <line
+              x1="160"
+              y1="160"
+              x2="258"
+              y2="91"
+              stroke="var(--accent)"
+              stroke-width="3.6"
+              stroke-linecap="round"
+            />
+            <circle cx="160" cy="160" r="2.8" fill="var(--accent)" />
+            <circle cx="40" cy="160" r="3.2" fill="var(--line)" />
+            <circle cx="280" cy="160" r="3.2" fill="var(--line)" />
+            <text x="30" y="177" class="diagram-text">A</text>
+            <text x="283" y="177" class="diagram-text">B</text>
+            <text x="146" y="177" class="diagram-text">O</text>
+            <text x="264" y="96" class="diagram-text">radius r</text>
+            <text x="116" y="30" class="diagram-text">arc AB</text>
+            <text x="106" y="186" class="diagram-text">diameter AB</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Multimedia Area with Slide Show -->
+      <section class="carousel" id="carousel" aria-label="Learning slides">
+        <div class="section-header">
+          <h2 data-i18n="carousel_title">Visualize the Rules</h2>
+          <p data-i18n="carousel_sub">Swipe through quick visuals that lock theorems in memory.</p>
+        </div>
+
+        <div class="carousel-shell">
+          <button class="carousel-btn" id="prev-slide" aria-label="Previous slide">◀</button>
+          <div class="carousel-track" id="carousel-track">
+            <figure class="slide is-active">
+              <img
+                src="assets/diagrams/slide-1-diameter.svg"
+                alt="Diameter and radius diagram"
+              />
+              <figcaption data-i18n="slide_1">Diameter is always twice the radius.</figcaption>
+            </figure>
+            <figure class="slide">
+              <img
+                src="assets/diagrams/slide-2-central-inscribed.svg"
+                alt="Central angle relationship"
+              />
+              <figcaption data-i18n="slide_2">Angles at the center are twice the angle at the circumference.</figcaption>
+            </figure>
+            <figure class="slide">
+              <img
+                src="assets/diagrams/slide-3-tangent-radius.svg"
+                alt="Tangent and radius right angle"
+              />
+              <figcaption data-i18n="slide_3">Tangent lines meet the radius at 90 degrees.</figcaption>
+            </figure>
+          </div>
+          <button class="carousel-btn" id="next-slide" aria-label="Next slide">▶</button>
+        </div>
+
+        <!-- Note where video with subtitles could go -->
+        <div class="media-note">
+          <strong data-i18n="video_slot_label">Video slot:</strong>
+          <span data-i18n="video_slot_text">Place a short explainer video here with subtitles for accessibility.</span>
+        </div>
+      </section>
+
+      <!-- Knowledge Section -->
+      <section class="knowledge" id="knowledge">
+        <div class="section-header">
+          <h2 data-i18n="rules_title">Core Circle Rules</h2>
+          <p data-i18n="rules_sub">Minimal cards, maximum clarity.</p>
+        </div>
+        <div class="card-grid">
+          <article class="rule-card">
+            <h3 data-i18n="rule_1_title">Angle in a Semicircle</h3>
+            <p data-i18n="rule_1_text">An angle subtended by a diameter is always 90 degrees.</p>
+          </article>
+          <article class="rule-card">
+            <h3 data-i18n="rule_2_title">Cyclic Quadrilateral</h3>
+            <p data-i18n="rule_2_text">Opposite angles in a cyclic quadrilateral sum to 180 degrees.</p>
+          </article>
+          <article class="rule-card">
+            <h3 data-i18n="rule_3_title">Tangent Properties</h3>
+            <p data-i18n="rule_3_text">A tangent is perpendicular to the radius at the point of contact.</p>
+          </article>
+          <article class="rule-card">
+            <h3 data-i18n="rule_4_title">Equal Chords</h3>
+            <p data-i18n="rule_4_text">Equal chords are equidistant from the center of the circle.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="jump-links" aria-label="Practice destinations">
+        <div class="section-header">
+          <h2 data-i18n="jump_title">Practice and Play</h2>
+          <p data-i18n="jump_sub">Choose an interactive module to continue learning.</p>
+        </div>
+        <div class="jump-grid">
+          <article class="jump-card">
+            <h3 data-i18n="jump_game_title">Goose Parametric Game</h3>
+            <p data-i18n="jump_game_text">
+              Tune geometric parameters in sandbox or challenge mode and compare overlap in real time.
+            </p>
+            <a class="btn primary" href="../Game/game/game.html" data-i18n="jump_game_cta">Enter Game</a>
+          </article>
+
+          <article class="jump-card">
+            <h3 data-i18n="jump_quiz_title">Circle Quiz</h3>
+            <p data-i18n="jump_quiz_text">
+              Answer mixed concept and diagram questions with instant feedback and score tracking.
+            </p>
+            <a class="btn ghost" href="../Quiz/test.html" data-i18n="jump_quiz_cta">Start Quiz</a>
+          </article>
+        </div>
+      </section>
+
+      <!-- Ads / Monetization -->
+      <section class="ads">
+        <div class="ads-banner" role="complementary" aria-label="Sponsored banner">
+          <span class="ads-label" data-i18n="ads_label">Sponsored</span>
+          <p data-i18n="ads_text">Upgrade to CircleSense+ for adaptive practice packs and printable proofs.</p>
+          <a class="btn ghost" href="sponsor.html" data-i18n="ads_cta">Learn More</a>
+        </div>
+      </section>
+    </main>
+
+    <!-- AI Chatbot Widget -->
+    <div class="geobot">
+      <button class="geobot-fab" id="geobot-fab" aria-label="Open GeoBot chatbot">
+        <span class="geobot-icon" aria-hidden="true">◎</span>
+        <span class="geobot-dot" id="geobot-dot" aria-hidden="true"></span>
+      </button>
+
+      <aside class="geobot-panel" id="geobot-panel" aria-live="polite">
+        <header class="geobot-header">
+          <div class="geobot-title">
+            <span class="geobot-badge" data-i18n="geobot_title">GeoBot</span>
+            <span class="geobot-subtitle" data-i18n="geobot_subtitle">Circle Geometry Helper</span>
+          </div>
+          <button class="geobot-close" id="geobot-close" aria-label="Close chat">×</button>
+        </header>
+
+        <div class="geobot-body" id="geobot-body"></div>
+
+        <div class="geobot-quick" id="geobot-quick">
+          <button class="geobot-chip" data-action="learn" data-i18n="geobot_q_learn">Learn Rules</button>
+          <button class="geobot-chip" data-action="play" data-i18n="geobot_q_play">Enter Quiz</button>
+          <button class="geobot-chip" data-action="contact" data-i18n="geobot_q_contact">Contact Us</button>
+        </div>
+
+        <form class="geobot-form" id="geobot-form" novalidate>
+          <!-- Contact Us Form -->
+          <label>
+            <span data-i18n="form_name_label">Name</span>
+            <input type="text" name="name" required data-i18n-placeholder="form_name_ph" />
+          </label>
+          <label>
+            <span data-i18n="form_email_label">Email</span>
+            <input type="email" name="email" required data-i18n-placeholder="form_email_ph" />
+          </label>
+          <label>
+            <span data-i18n="form_message_label">Message</span>
+            <textarea name="message" rows="3" required data-i18n-placeholder="form_message_ph"></textarea>
+          </label>
+          <div class="geobot-warning" id="geobot-warning" role="alert" aria-live="polite"></div>
+          <div class="geobot-form-actions">
+            <button type="submit" class="geobot-btn primary" data-i18n="form_send">Submit</button>
+            <button type="button" class="geobot-btn ghost" id="geobot-clear" data-i18n="form_clear">Clear</button>
+            <button type="button" class="geobot-btn ghost" id="geobot-back" data-i18n="form_back">Back</button>
+          </div>
+        </form>
+      </aside>
+    </div>
+
+    <!-- Privacy Banner -->
+    <div class="privacy-banner" id="privacy-banner" role="region" aria-label="Privacy notice">
+      <p>
+        <span data-i18n="privacy_text">We use minimal cookies to remember your theme and accessibility settings. No personal data is sold.</span>
+      </p>
+      <div class="privacy-actions">
+        <button class="btn primary" id="accept-privacy" data-i18n="privacy_accept">Accept</button>
+        <button class="btn ghost" id="dismiss-privacy" data-i18n="privacy_later">Later</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p data-i18n="footer_text">CircleSense © 2026 • Learn geometry with clarity.</p>
+      <div class="footer-links">
+        <a href="#top" data-i18n="footer_link_top">Back to top</a>
+        <a href="#knowledge" data-i18n="footer_link_rules">Core rules</a>
+        <a href="#carousel" data-i18n="footer_link_slides">Slides</a>
+        <a href="privacy.html" data-i18n="footer_link_privacy">Privacy Policy</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
