@@ -1,0 +1,192 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CircleSense | Advanced Goose Geometry</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="game.css" />
+  </head>
+  <body data-theme="light" data-font="md" data-contrast="normal" data-lang="en">
+    <header class="site-header">
+      <a class="logo" href="../../HomePage/index.html" aria-label="CircleSense homepage">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">CircleSense</span>
+      </a>
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../../HomePage/index.html">Home</a>
+        <span aria-hidden="true">›</span>
+        <span class="breadcrumb-current">Game</span>
+      </nav>
+
+      <div class="tools" role="group" aria-label="Accessibility tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false">Theme: Light</button>
+        <button class="tool-btn" id="font-toggle" aria-pressed="false">Font: Normal</button>
+        <a class="tool-btn" href="game-zh.html" title="Switch to Chinese">中文</a>
+        <button class="tool-btn" id="cb-toggle" aria-pressed="false">Color: Standard</button>
+      </div>
+    </header>
+
+    <main id="top" class="template-main" aria-label="Page content area">
+      <section
+        class="game-root"
+        aria-label="Advanced goose geometry lab"
+        data-text-mode-sandbox="Pure math sandbox: drag all 16 sliders and inspect continuous geometric deformation in real time."
+        data-text-mode-challenge="One-play challenge: a random target goose is generated; tune your parameter vector to maximize overlap."
+        data-text-status-ready-sandbox="Sandbox ready. Adjust parameters and observe analytic geometry behavior."
+        data-text-status-ready-challenge="Challenge ready. Compare your model with the dashed target and optimize overlap."
+        data-text-status-new-target="New random target generated; your parameter vector has been reset."
+        data-text-status-match-good="Excellent overlap. Similarity = {score}%."
+        data-text-status-match-keep="Current similarity = {score}%. Keep tuning."
+        data-text-table-param="parameter"
+        data-text-table-target="target"
+        data-text-table-delta="abs error"
+        data-text-legend-player="player"
+        data-text-legend-target="target"
+        data-text-show-panel="Show Panel"
+        data-text-hide-panel="Hide Panel"
+      >
+        <header class="game-toolbar">
+          <div class="game-toolbar-title">
+            <p class="game-kicker">Advanced Analytic Geometry Modeling</p>
+            <h1>Goose Parametric Studio</h1>
+            <p class="game-sub">16 high-level geometric parameters, rotated ellipses, and cubic Bezier curves.</p>
+          </div>
+          <div class="game-toolbar-actions" role="group" aria-label="Mode and panel controls">
+            <button class="btn ghost game-tab-btn" id="mode-sandbox-btn">Sandbox Mode</button>
+            <button class="btn ghost game-tab-btn" id="mode-challenge-btn">Goose Coincidence Challenge</button>
+            <button class="btn ghost" id="panel-toggle-btn">Hide Panel</button>
+          </div>
+        </header>
+
+        <section class="game-workspace" id="game-workspace">
+          <aside class="game-left-panel" id="game-left-panel" aria-label="Parameter console">
+            <section class="game-card">
+              <h2>Mode Focus</h2>
+              <p id="mode-description" class="mode-text"></p>
+              <p class="mode-text" id="status-text" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="game-card">
+              <h2>Module A - Rotated Ellipse Model</h2>
+              <div class="slider-list" id="module-a-sliders">
+                <label class="slider-item" for="param-x1"><span>X1_center</span><output id="value-x1">0.00</output></label>
+                <input id="param-x1" type="range" min="-2.0" max="2.0" step="0.1" />
+
+                <label class="slider-item" for="param-y1"><span>Y1_center</span><output id="value-y1">0.00</output></label>
+                <input id="param-y1" type="range" min="-1.5" max="1.5" step="0.1" />
+
+                <label class="slider-item" for="param-a1"><span>a1</span><output id="value-a1">3.20</output></label>
+                <input id="param-a1" type="range" min="2.2" max="4.8" step="0.1" />
+
+                <label class="slider-item" for="param-e1"><span>e1</span><output id="value-e1">0.25</output></label>
+                <input id="param-e1" type="range" min="0" max="0.92" step="0.01" />
+
+                <label class="slider-item" for="param-phi1"><span>phi1</span><output id="value-phi1">0.35</output></label>
+                <input id="param-phi1" type="range" min="0" max="6.283" step="0.01" />
+
+                <label class="slider-item" for="param-x2"><span>X2_center</span><output id="value-x2">3.60</output></label>
+                <input id="param-x2" type="range" min="1.8" max="5.8" step="0.1" />
+
+                <label class="slider-item" for="param-y2"><span>Y2_center</span><output id="value-y2">2.80</output></label>
+                <input id="param-y2" type="range" min="1.2" max="4.8" step="0.1" />
+
+                <label class="slider-item" for="param-a2"><span>a2</span><output id="value-a2">1.40</output></label>
+                <input id="param-a2" type="range" min="0.8" max="2.2" step="0.1" />
+
+                <label class="slider-item" for="param-e2"><span>e2</span><output id="value-e2">0.18</output></label>
+                <input id="param-e2" type="range" min="0" max="0.92" step="0.01" />
+
+                <label class="slider-item" for="param-phi2"><span>phi2</span><output id="value-phi2">0.12</output></label>
+                <input id="param-phi2" type="range" min="0" max="6.283" step="0.01" />
+              </div>
+            </section>
+
+            <section class="game-card">
+              <h2>Module B - Cubic Bezier Model</h2>
+              <div class="slider-list">
+                <label class="slider-item" for="param-l"><span>L</span><output id="value-l">4.20</output></label>
+                <input id="param-l" type="range" min="2.0" max="8.0" step="0.1" />
+
+                <label class="slider-item" for="param-kappa"><span>kappa</span><output id="value-kappa">1.60</output></label>
+                <input id="param-kappa" type="range" min="-3.0" max="3.0" step="0.1" />
+
+                <label class="slider-item" for="param-phi3"><span>phi3</span><output id="value-phi3">1.10</output></label>
+                <input id="param-phi3" type="range" min="0" max="6.283" step="0.01" />
+              </div>
+            </section>
+
+            <section class="game-card">
+              <h2>Module C - Symmetric Ellipse Model</h2>
+              <div class="slider-list">
+                <label class="slider-item" for="param-d"><span>D</span><output id="value-d">0.62</output></label>
+                <input id="param-d" type="range" min="0.15" max="1.60" step="0.01" />
+
+                <label class="slider-item" for="param-a3"><span>a3</span><output id="value-a3">0.16</output></label>
+                <input id="param-a3" type="range" min="0.06" max="0.50" step="0.01" />
+
+                <label class="slider-item" for="param-e3"><span>e3</span><output id="value-e3">0.25</output></label>
+                <input id="param-e3" type="range" min="0" max="0.95" step="0.01" />
+              </div>
+
+              <div class="panel-actions">
+                <button class="btn ghost" id="reset-player-btn">Reset Player Parameters</button>
+              </div>
+            </section>
+
+            <section class="game-card equation-card">
+              <h2>Equation Console</h2>
+              <p><strong>E1</strong> <code id="eq-e1"></code></p>
+              <p><strong>E2</strong> <code id="eq-e2"></code></p>
+              <p><strong>B1(t)</strong> <code id="eq-neck"></code></p>
+              <p><strong>B2(t)</strong> <code id="eq-wing"></code></p>
+              <p><strong>E3_pair</strong> <code id="eq-eye"></code></p>
+            </section>
+
+            <section class="game-card challenge-card" id="challenge-card">
+              <h2>Target Parameter Console</h2>
+              <div class="challenge-metrics">
+                <p><strong>Similarity</strong> <span id="similarity-value">--</span></p>
+                <p><strong>Attempts</strong> <span id="attempts-value">0</span></p>
+              </div>
+              <div class="target-grid" id="target-grid"></div>
+              <div class="panel-actions">
+                <button class="btn primary" id="new-target-btn">New Random Target</button>
+                <button class="btn ghost" id="check-match-btn">Evaluate Overlap</button>
+              </div>
+            </section>
+          </aside>
+
+          <section class="game-right-panel" aria-label="Cartesian geometry canvas">
+            <button class="btn ghost game-reopen-btn is-hidden" id="panel-reopen-btn">Show Panel</button>
+            <div class="game-canvas-wrap">
+              <canvas id="goose-canvas" aria-label="Geometric goose canvas"></canvas>
+            </div>
+            <p class="canvas-caption">
+              Cartesian grid with ticks. Player goose = cyan solid curve; target goose = magenta dashed curve.
+            </p>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="privacy-banner" id="privacy-banner" role="region" aria-label="Privacy notice">
+      <p>We use minimal cookies to remember your theme and accessibility settings. No personal data is sold.</p>
+      <div class="privacy-actions">
+        <button class="btn primary" id="accept-privacy">Accept</button>
+        <button class="btn ghost" id="dismiss-privacy">Later</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>CircleSense © 2026 - Learn geometry with clarity.</p>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="game.js" defer></script>
+  </body>
+</html>

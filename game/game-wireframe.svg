@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3200" height="1250" viewBox="0 0 3200 1250" role="img" aria-labelledby="title desc">
+  <title id="title">CircleSense Game Wireframe</title>
+  <desc id="desc">Low-fidelity wireframe for the math learning game page, desktop and mobile layouts.</desc>
+
+  <rect x="0" y="0" width="3200" height="1250" fill="#f4f4f4"/>
+
+  <style>
+    .board { fill: #fff; stroke: #111; stroke-width: 3; }
+    .block { fill: none; stroke: #111; stroke-width: 2; }
+    .soft { fill: none; stroke: #666; stroke-width: 1.5; stroke-dasharray: 7 6; }
+    .h1 { font: 700 26px Arial, sans-serif; fill: #111; }
+    .h2 { font: 700 20px Arial, sans-serif; fill: #111; }
+    .t { font: 500 16px Arial, sans-serif; fill: #111; }
+    .s { font: 500 14px Arial, sans-serif; fill: #333; }
+    .xs { font: 500 12px Arial, sans-serif; fill: #444; }
+    .center { text-anchor: middle; dominant-baseline: middle; }
+  </style>
+
+  <text x="60" y="52" class="h1">Game Wireframe (Desktop + Mobile)</text>
+
+  <rect x="60" y="90" width="1440" height="1060" class="board"/>
+  <text x="80" y="122" class="h2">Desktop 1440</text>
+
+  <rect x="80" y="140" width="1400" height="72" class="block"/>
+  <text x="100" y="182" class="t">Header: Logo | Breadcrumb | Accessibility Buttons</text>
+
+  <rect x="80" y="232" width="1400" height="120" class="block"/>
+  <text x="100" y="272" class="t">Game Toolbar: Kicker + H1 + Description</text>
+  <text x="100" y="300" class="s">Actions: Sandbox / Challenge / Hide Panel</text>
+
+  <rect x="80" y="372" width="1400" height="620" class="block"/>
+  <text x="100" y="404" class="t">Game Workspace</text>
+
+  <rect x="110" y="412" width="380" height="550" class="block"/>
+  <text x="130" y="442" class="t">Left Parameter Panel</text>
+
+  <rect x="130" y="458" width="340" height="52" class="block"/>
+  <text x="140" y="490" class="xs">Mode Focus + Status</text>
+
+  <rect x="130" y="520" width="340" height="148" class="block"/>
+  <text x="140" y="552" class="xs">Module A Sliders (10)</text>
+
+  <rect x="130" y="678" width="340" height="82" class="block"/>
+  <text x="140" y="710" class="xs">Module B Sliders (3)</text>
+
+  <rect x="130" y="770" width="340" height="86" class="block"/>
+  <text x="140" y="802" class="xs">Module C Sliders (3) + Reset</text>
+
+  <rect x="130" y="866" width="340" height="42" class="block"/>
+  <text x="140" y="892" class="xs">Equation Console</text>
+
+  <rect x="130" y="918" width="340" height="44" class="block"/>
+  <text x="140" y="944" class="xs">Target Console (Similarity + Actions)</text>
+
+  <rect x="520" y="412" width="930" height="550" class="block"/>
+  <text x="540" y="442" class="t">Right Panel</text>
+
+  <rect x="550" y="464" width="870" height="430" class="block"/>
+  <text x="985" y="680" class="t center">Canvas Area (Cartesian Grid + Goose)</text>
+
+  <rect x="550" y="906" width="870" height="38" class="block"/>
+  <text x="570" y="930" class="xs">Canvas Caption / Legend</text>
+
+  <rect x="80" y="1012" width="1400" height="72" class="block"/>
+  <text x="100" y="1054" class="t">Privacy Banner: Notice + Accept / Later</text>
+
+  <rect x="80" y="1100" width="1400" height="36" class="block"/>
+  <text x="100" y="1123" class="xs">Footer: Copyright + Back to Top</text>
+
+  <rect x="1580" y="90" width="460" height="1060" class="board"/>
+  <text x="1600" y="122" class="h2">Mobile 390</text>
+
+  <rect x="1600" y="140" width="420" height="64" class="block"/>
+  <text x="1614" y="178" class="xs">Header (stacked tools)</text>
+
+  <rect x="1600" y="218" width="420" height="132" class="block"/>
+  <text x="1614" y="252" class="xs">Game Toolbar</text>
+  <text x="1614" y="276" class="xs">Title + mode buttons (wrapped)</text>
+
+  <rect x="1600" y="364" width="420" height="560" class="block"/>
+  <text x="1614" y="394" class="xs">Workspace</text>
+
+  <rect x="1620" y="404" width="380" height="420" class="block"/>
+  <text x="1810" y="614" class="xs center">Canvas</text>
+
+  <rect x="1620" y="836" width="380" height="60" class="block"/>
+  <text x="1634" y="870" class="xs">Caption</text>
+
+  <rect x="1660" y="428" width="320" height="450" class="soft"/>
+  <text x="1674" y="454" class="xs">Overlay Left Panel (slide over canvas)</text>
+
+  <rect x="1600" y="940" width="420" height="96" class="block"/>
+  <text x="1614" y="976" class="xs">Privacy Banner</text>
+  <text x="1614" y="999" class="xs">Notice + 2 buttons</text>
+
+  <rect x="1600" y="1048" width="420" height="36" class="block"/>
+  <text x="1614" y="1072" class="xs">Footer</text>
+
+  <rect x="2140" y="140" width="980" height="450" class="board"/>
+  <text x="2160" y="174" class="h2">Component Legend</text>
+
+  <text x="2160" y="212" class="t">A. Site Header</text>
+  <text x="2160" y="242" class="s">Logo, breadcrumb, theme/font/language/contrast tools</text>
+
+  <text x="2160" y="286" class="t">B. Game Toolbar</text>
+  <text x="2160" y="316" class="s">Kicker, title, subtitle, mode switch, panel toggle</text>
+
+  <text x="2160" y="360" class="t">C. Left Panel Cards</text>
+  <text x="2160" y="390" class="s">Mode, Module A/B/C sliders, equation console, challenge panel</text>
+
+  <text x="2160" y="434" class="t">D. Right Canvas Area</text>
+  <text x="2160" y="464" class="s">Main canvas + caption + hidden panel reopen button</text>
+
+  <text x="2160" y="508" class="t">E. Global Bottom</text>
+  <text x="2160" y="538" class="s">Privacy banner and site footer</text>
+
+  <rect x="2140" y="610" width="980" height="540" class="board"/>
+  <text x="2160" y="644" class="h2">Figma Build Notes</text>
+
+  <text x="2160" y="686" class="s">1) Create two frames: Desktop(1440) and Mobile(390).</text>
+  <text x="2160" y="718" class="s">2) Use 8px spacing system and low-fidelity grayscale only.</text>
+  <text x="2160" y="750" class="s">3) Left panel is absolute/overlay on desktop, drawer on mobile.</text>
+  <text x="2160" y="782" class="s">4) Keep cards as repeated component for quick iteration.</text>
+  <text x="2160" y="814" class="s">5) Keep challenge section optional by mode state.</text>
+  <text x="2160" y="846" class="s">6) Add two variants: Panel Expanded / Panel Collapsed.</text>
+  <text x="2160" y="878" class="s">7) Add two variants: Sandbox Mode / Challenge Mode.</text>
+  <text x="2160" y="910" class="s">8) Annotate slider groups with parameter counts.</text>
+</svg>
