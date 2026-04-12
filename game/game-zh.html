@@ -1,0 +1,190 @@
+﻿<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>圆感知 CircleSense | 大鹅高阶几何</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="game.css" />
+  </head>
+  <body data-theme="light" data-font="md" data-contrast="normal" data-lang="zh">
+    <header class="site-header">
+      <a class="logo" href="../../HomePage/index-zh.html" aria-label="CircleSense 首页">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">圆感知 CircleSense</span>
+      </a>
+
+      <nav class="breadcrumb" aria-label="面包屑导航">
+        <a href="../../HomePage/index-zh.html">主页</a>
+        <span aria-hidden="true">›</span>
+        <span class="breadcrumb-current">游戏</span>
+      </nav>
+
+      <div class="tools" role="group" aria-label="无障碍工具">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false">主题: 明亮</button>
+        <button class="tool-btn" id="font-toggle" aria-pressed="false">字体: 标准</button>
+        <a class="tool-btn" href="game.html" title="Switch to English">EN</a>
+        <button class="tool-btn" id="cb-toggle" aria-pressed="false">颜色: 标准</button>
+      </div>
+    </header>
+
+    <main id="top" class="template-main" aria-label="页面主要内容">
+      <section
+        class="game-root"
+        aria-label="大鹅高阶几何实验区"
+        data-text-mode-sandbox="纯数学沙盒：拖动 16 个参数滑杆，实时观察解析几何模型的连续变形。"
+        data-text-mode-challenge="单局挑战：系统随机生成目标大鹅，请调节你的参数向量以提高重合度。"
+        data-text-status-ready-sandbox="沙盒已就绪：可自由观察参数与图形映射关系。"
+        data-text-status-ready-challenge="挑战已就绪：请将你的模型与虚线目标尽量重合。"
+        data-text-status-new-target="已生成随机目标，并重置你的参数向量。"
+        data-text-status-match-good="重合优秀，相似度 = {score}%。"
+        data-text-status-match-keep="当前相似度 = {score}%，继续微调。"
+        data-text-table-param="参数"
+        data-text-table-target="目标值"
+        data-text-table-delta="绝对误差"
+        data-text-legend-player="玩家模型"
+        data-text-legend-target="目标模型"
+        data-text-show-panel="显示面板"
+        data-text-hide-panel="隐藏面板"
+      >
+        <header class="game-toolbar">
+          <div class="game-toolbar-title">
+            <p class="game-kicker">高阶解析几何参数建模</p>
+            <h1>大鹅参数化工作室</h1>
+            <p class="game-sub">16 个高阶几何参数，旋转椭圆与三次贝塞尔曲线联合建模。</p>
+          </div>
+          <div class="game-toolbar-actions" role="group" aria-label="模式与面板控制">
+            <button class="btn ghost game-tab-btn" id="mode-sandbox-btn">沙盒模式</button>
+            <button class="btn ghost game-tab-btn" id="mode-challenge-btn">重合匹配挑战</button>
+            <button class="btn ghost" id="panel-toggle-btn">隐藏面板</button>
+          </div>
+        </header>
+
+        <section class="game-workspace" id="game-workspace">
+          <aside class="game-left-panel" id="game-left-panel" aria-label="参数控制台">
+            <section class="game-card">
+              <h2>模式说明</h2>
+              <p id="mode-description" class="mode-text"></p>
+              <p class="mode-text" id="status-text" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="game-card">
+              <h2>模块 A - 旋转椭圆模型</h2>
+              <div class="slider-list" id="module-a-sliders">
+                <label class="slider-item" for="param-x1"><span>X1_center</span><output id="value-x1">0.00</output></label>
+                <input id="param-x1" type="range" min="-2.0" max="2.0" step="0.1" />
+
+                <label class="slider-item" for="param-y1"><span>Y1_center</span><output id="value-y1">0.00</output></label>
+                <input id="param-y1" type="range" min="-1.5" max="1.5" step="0.1" />
+
+                <label class="slider-item" for="param-a1"><span>a1</span><output id="value-a1">3.20</output></label>
+                <input id="param-a1" type="range" min="2.2" max="4.8" step="0.1" />
+
+                <label class="slider-item" for="param-e1"><span>e1</span><output id="value-e1">0.25</output></label>
+                <input id="param-e1" type="range" min="0" max="0.92" step="0.01" />
+
+                <label class="slider-item" for="param-phi1"><span>phi1</span><output id="value-phi1">0.35</output></label>
+                <input id="param-phi1" type="range" min="0" max="6.283" step="0.01" />
+
+                <label class="slider-item" for="param-x2"><span>X2_center</span><output id="value-x2">3.60</output></label>
+                <input id="param-x2" type="range" min="1.8" max="5.8" step="0.1" />
+
+                <label class="slider-item" for="param-y2"><span>Y2_center</span><output id="value-y2">2.80</output></label>
+                <input id="param-y2" type="range" min="1.2" max="4.8" step="0.1" />
+
+                <label class="slider-item" for="param-a2"><span>a2</span><output id="value-a2">1.40</output></label>
+                <input id="param-a2" type="range" min="0.8" max="2.2" step="0.1" />
+
+                <label class="slider-item" for="param-e2"><span>e2</span><output id="value-e2">0.18</output></label>
+                <input id="param-e2" type="range" min="0" max="0.92" step="0.01" />
+
+                <label class="slider-item" for="param-phi2"><span>phi2</span><output id="value-phi2">0.12</output></label>
+                <input id="param-phi2" type="range" min="0" max="6.283" step="0.01" />
+              </div>
+            </section>
+
+            <section class="game-card">
+              <h2>模块 B - 三次贝塞尔模型</h2>
+              <div class="slider-list">
+                <label class="slider-item" for="param-l"><span>L</span><output id="value-l">4.20</output></label>
+                <input id="param-l" type="range" min="2.0" max="8.0" step="0.1" />
+
+                <label class="slider-item" for="param-kappa"><span>kappa</span><output id="value-kappa">1.60</output></label>
+                <input id="param-kappa" type="range" min="-3.0" max="3.0" step="0.1" />
+
+                <label class="slider-item" for="param-phi3"><span>phi3</span><output id="value-phi3">1.10</output></label>
+                <input id="param-phi3" type="range" min="0" max="6.283" step="0.01" />
+              </div>
+            </section>
+
+            <section class="game-card">
+              <h2>模块 C - 对称椭圆模型</h2>
+              <div class="slider-list">
+                <label class="slider-item" for="param-d"><span>D</span><output id="value-d">0.62</output></label>
+                <input id="param-d" type="range" min="0.15" max="1.60" step="0.01" />
+
+                <label class="slider-item" for="param-a3"><span>a3</span><output id="value-a3">0.16</output></label>
+                <input id="param-a3" type="range" min="0.06" max="0.50" step="0.01" />
+
+                <label class="slider-item" for="param-e3"><span>e3</span><output id="value-e3">0.25</output></label>
+                <input id="param-e3" type="range" min="0" max="0.95" step="0.01" />
+              </div>
+
+              <div class="panel-actions">
+                <button class="btn ghost" id="reset-player-btn">重置玩家参数</button>
+              </div>
+            </section>
+
+            <section class="game-card equation-card">
+              <h2>方程控制台</h2>
+              <p><strong>E1</strong> <code id="eq-e1"></code></p>
+              <p><strong>E2</strong> <code id="eq-e2"></code></p>
+              <p><strong>B1(t)</strong> <code id="eq-neck"></code></p>
+              <p><strong>B2(t)</strong> <code id="eq-wing"></code></p>
+              <p><strong>E3_pair</strong> <code id="eq-eye"></code></p>
+            </section>
+
+            <section class="game-card challenge-card" id="challenge-card">
+              <h2>目标参数控制台</h2>
+              <div class="challenge-metrics">
+                <p><strong>相似度</strong> <span id="similarity-value">--</span></p>
+                <p><strong>尝试次数</strong> <span id="attempts-value">0</span></p>
+              </div>
+              <div class="target-grid" id="target-grid"></div>
+              <div class="panel-actions">
+                <button class="btn primary" id="new-target-btn">随机新目标</button>
+                <button class="btn ghost" id="check-match-btn">评估重合</button>
+              </div>
+            </section>
+          </aside>
+
+          <section class="game-right-panel" aria-label="笛卡尔几何画布">
+            <button class="btn ghost game-reopen-btn is-hidden" id="panel-reopen-btn">显示面板</button>
+            <div class="game-canvas-wrap">
+              <canvas id="goose-canvas" aria-label="几何大鹅画布"></canvas>
+            </div>
+            <p class="canvas-caption">标准笛卡尔网格与刻度。玩家模型: 青色实线；目标模型: 洋红虚线。</p>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <div class="privacy-banner" id="privacy-banner" role="region" aria-label="隐私提示">
+      <p>我们仅使用少量 Cookie 记住主题与无障碍设置，不会出售个人数据。</p>
+      <div class="privacy-actions">
+        <button class="btn primary" id="accept-privacy">同意</button>
+        <button class="btn ghost" id="dismiss-privacy">稍后</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>CircleSense © 2026 - 清晰学习几何。</p>
+      <div class="footer-links">
+        <a href="#top">返回顶部</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="game.js" defer></script>
+  </body>
+</html>
