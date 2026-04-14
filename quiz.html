@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Circle Geometry Learning Test</title>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="logo" href="../HomePage/index.html" aria-label="CircleSense homepage">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">CircleSense</span>
+      </a>
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../HomePage/index.html">Home</a>
+        <span aria-hidden="true">›</span>
+        <span class="breadcrumb-current">Quiz</span>
+      </nav>
+
+      <div class="tools" role="group" aria-label="Accessibility tools">
+        <button id="themeModeBtn" class="tool-btn" aria-label="Theme mode">Theme: Bright</button>
+        <button id="fontModeBtn" class="tool-btn" aria-label="Font mode">Font: Standard</button>
+        <button id="cbModeBtn" class="tool-btn" aria-label="Color mode">Color: Standard</button>
+        <button id="langToggleBtn" class="tool-btn" aria-label="Switch language">中文</button>
+      </div>
+    </header>
+
+    <main class="main-layout" role="main">
+      <section class="canvas-panel" aria-label="Geometry Visual Zone">
+        <div class="canvas-frame">
+          <canvas id="gameCanvas" width="900" height="560" aria-label="Circle geometry canvas"></canvas>
+        </div>
+        <div class="assist-text" id="canvasHelp" aria-live="polite"></div>
+      </section>
+
+      <aside class="challenge-panel" aria-label="Challenge Panel">
+        <div class="quiz-progress-panel" aria-label="Question index">
+          <div class="quiz-progress-meta">
+            <strong id="questionProgressLabel">Question 1 / 10</strong>
+            <span id="questionMixLabel">5 basics + 5 diagram questions</span>
+          </div>
+          <div id="questionNav" class="question-nav" role="list" aria-label="Question list"></div>
+        </div>
+
+        <div class="task-box" id="taskText" aria-live="polite"></div>
+
+        <div class="answer-box" id="fillAnswerBox" hidden>
+          <label id="fillInputLabel" for="fillInput">Fill answer</label>
+          <input id="fillInput" type="number" inputmode="decimal" step="0.1" aria-label="Numeric answer" />
+          <button id="submitFillBtn" class="btn-secondary" aria-label="Submit fill answer">Submit</button>
+        </div>
+
+        <div class="answer-box" id="choiceBox" hidden>
+          <p class="answer-title" id="choiceTitle">Choose the correct answer</p>
+          <div id="choiceButtons" class="choice-buttons"></div>
+        </div>
+
+        <div class="match-box" id="matchBox" hidden>
+          <p class="match-title" id="matchTitle">Theorem matching</p>
+          <div id="matchRows" class="match-rows"></div>
+          <button id="submitMatchBtn" class="btn-secondary" aria-label="Submit matching answer">Submit matching</button>
+        </div>
+      </aside>
+    </main>
+
+    <section class="bottom-controls" aria-label="Controls">
+      <div class="control-buttons">
+        <button id="startBtn" class="btn-primary" aria-label="Start test">Start test</button>
+        <button id="resetBtn" class="btn-ghost" aria-label="Reset test">Reset</button>
+      </div>
+
+      <div class="difficulty-group" role="radiogroup" aria-label="Difficulty">
+        <label id="difficultyBasicLabel"><input type="radio" name="difficulty" value="basic" checked />Basic</label>
+        <label id="difficultyExpertLabel"><input type="radio" name="difficulty" value="expert" />Expert</label>
+      </div>
+
+      <div class="status-grid" aria-label="Score and hints" aria-live="polite">
+        <div><span id="scoreLabel">Score</span>: <strong id="scoreValue">0</strong></div>
+        <div><span id="correctLabel">Correct</span>: <strong id="correctValue">0</strong></div>
+        <div><span id="goalLabel">Goal</span>: <strong id="goalValue">0</strong></div>
+        <div class="status-line" id="statusText"></div>
+      </div>
+    </section>
+
+    <div id="levelClearOverlay" class="overlay" aria-hidden="true">
+      <div class="overlay-card">
+        <h2 id="overlayTitle">Results Page</h2>
+        <p id="overlayText">You have completed this round.</p>
+        <p><strong>Final score:</strong> <span id="resultFinalScore">0</span></p>
+        <p><strong>Accuracy:</strong> <span id="resultAccuracy">0%</span></p>
+        <p><strong>Suggested next step:</strong> <span id="resultSuggestion">--</span></p>
+        <button id="resultCloseBtn" class="btn-primary" aria-label="Done">Done</button>
+      </div>
+    </div>
+
+    <div id="answerFeedbackOverlay" class="overlay" aria-hidden="true">
+      <div class="overlay-card">
+        <h2 id="feedbackTitle">Answer Result</h2>
+        <p id="feedbackResult">Correct.</p>
+        <p id="feedbackAnswer">Correct answer: --</p>
+        <p id="feedbackAsk">View full explanation?</p>
+        <div class="feedback-actions" id="feedbackChoiceActions">
+          <button id="feedbackSkipBtn" class="btn-ghost" aria-label="Skip explanation">Skip</button>
+          <button id="feedbackViewBtn" class="btn-secondary" aria-label="View explanation">View explanation</button>
+        </div>
+        <div id="feedbackExplanation" class="feedback-explanation" hidden>
+          <h3 id="feedbackExplanationTitle">Detailed solution</h3>
+          <p id="feedbackExplanationText">--</p>
+        </div>
+        <button id="feedbackContinueBtn" class="btn-primary" aria-label="Continue" hidden>Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="test.js"></script>
+</body>
+</html>
