@@ -269,6 +269,53 @@
     });
   });
 
+  // Visual MCQ set for Basic (diagram + multiple-choice).
+  [
+    { id: 'basic_visual_mcq_1', central: 100, answer: '50°', opts: ['40°', '50°', '60°', '100°'] },
+    { id: 'basic_visual_mcq_2', central: 140, answer: '70°', opts: ['35°', '70°', '80°', '140°'] },
+    { id: 'basic_visual_mcq_3', central: 120, answer: '60°', opts: ['30°', '45°', '60°', '90°'] },
+  ].forEach(function (item) {
+    q.push({
+      id: item.id,
+      level: 'basic',
+      topic: 'inscribed-angle',
+      type: 'mcq',
+      answer: item.answer,
+      options: item.opts,
+      tolerance: 0.2,
+      data: { central: item.central },
+      prompt: {
+        zh: '图中同弧 AB 的圆心角 ∠AOB=' + item.central + '°，圆周角 ∠ACB 等于多少？',
+        en: 'In the diagram, central angle ∠AOB on arc AB is ' + item.central + '°. What is inscribed angle ∠ACB?'
+      },
+      visual: { kind: 'angle', centralAngle: item.central },
+      difficultyScore: 4.8
+    });
+  });
+
+  // Visual MCQ set for Expert (diagram + multiple-choice).
+  [
+    { id: 'expert_visual_mcq_1', inscribed: 34, answer: '34°', opts: ['17°', '34°', '68°', '146°'] },
+    { id: 'expert_visual_mcq_2', inscribed: 41, answer: '41°', opts: ['20.5°', '41°', '82°', '139°'] },
+  ].forEach(function (item) {
+    q.push({
+      id: item.id,
+      level: 'expert',
+      topic: 'tangent-chord-angle',
+      type: 'mcq',
+      answer: item.answer,
+      options: item.opts,
+      tolerance: 0.2,
+      data: { inscribed: item.inscribed },
+      prompt: {
+        zh: '图中切线与弦 AB 所夹角等于同弧对应圆周角。已知 ∠ACB=' + item.inscribed + '°，求 ∠TAB。',
+        en: 'By the tangent-chord theorem, the tangent-chord angle equals the inscribed angle on the same arc. Given ∠ACB=' + item.inscribed + '°, find ∠TAB.'
+      },
+      visual: { kind: 'tangent-chord', inscribedAngle: item.inscribed },
+      difficultyScore: 9.2
+    });
+  });
+
   // Basic concept-only questions (no diagram).
   [
     {
@@ -1577,6 +1624,26 @@ function chooseQuestionsFromPool(pool, count, preferHard) {
   return selected;
 }
 
+function ensureVisualMcqInRound(selectedVisual, visualPool, usedIds, preferHard) {
+  const hasMcq = selectedVisual.some((q) => q.type === 'mcq');
+  if (hasMcq) return selectedVisual;
+
+  const mcqPool = visualPool.filter((q) => q.type === 'mcq' && !usedIds.has(q.id));
+  if (mcqPool.length === 0) return selectedVisual;
+
+  const picked = chooseQuestionsFromPool(mcqPool, 1, preferHard)[0];
+  if (!picked) return selectedVisual;
+
+  const replaceIndex = selectedVisual.findIndex((q) => q.type !== 'mcq');
+  if (replaceIndex >= 0) {
+    selectedVisual[replaceIndex] = picked;
+  } else if (selectedVisual.length < 5) {
+    selectedVisual.push(picked);
+  }
+
+  return selectedVisual;
+}
+
 function buildRoundQuestions() {
   const band = getDifficultyBand();
   let eligible = QUESTION_BANK.filter((q) => allowedQuestion(q, band));
@@ -1596,7 +1663,9 @@ function buildRoundQuestions() {
   const selectedText = chooseQuestionsFromPool(textPool, 5, preferHard);
   const usedIds = new Set(selectedText.map((q) => q.id));
   const visualCandidates = visualPool.filter((q) => !usedIds.has(q.id));
-  const selectedVisual = chooseQuestionsFromPool(visualCandidates, 5, preferHard);
+  let selectedVisual = chooseQuestionsFromPool(visualCandidates, 5, preferHard);
+  selectedVisual = ensureVisualMcqInRound(selectedVisual, visualCandidates, usedIds, preferHard);
+  selectedVisual.forEach((q) => usedIds.add(q.id));
 
   // Final fallback if any side is short.
   if (selectedText.length < 5) {
