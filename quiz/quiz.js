@@ -573,6 +573,8 @@ const overlayTitle = document.getElementById('overlayTitle');
 const overlayText = document.getElementById('overlayText');
 const resultFinalScore = document.getElementById('resultFinalScore');
 const resultAccuracy = document.getElementById('resultAccuracy');
+const resultStageLabel = document.getElementById('resultStageLabel');
+const resultStage = document.getElementById('resultStage');
 const resultSuggestion = document.getElementById('resultSuggestion');
 const resultCloseBtn = document.getElementById('resultCloseBtn');
 const answerFeedbackOverlay = document.getElementById('answerFeedbackOverlay');
@@ -703,6 +705,7 @@ const I18N = {
     overlayTitle: 'Results Page',
     overlayText: 'You have completed 10 questions.',
     resultDone: 'Done',
+    resultStageLabel: 'Stage',
     suggestionHigh: 'Move to expert and focus on composite-circle problems.',
     suggestionMid: 'Stay at current level and practice chord/sector calculations.',
     suggestionLow: 'Step back to basic and review central vs inscribed angle rules.',
@@ -1780,6 +1783,15 @@ function updateStatusPanel() {
   updateQuestionNav();
 }
 
+function getStageTitleBySolved(solved, total) {
+  if (total <= 0) return lang === 'zh' ? '\u5f85\u6311\u6218' : 'Ready to Start';
+  if (solved >= total) return lang === 'zh' ? '\u806a\u660e\u7edd\u9876' : 'Genius Master';
+  if (solved >= total - 1) return lang === 'zh' ? '\u51e0\u4f55\u5b97\u5e08' : 'Geometry Grandmaster';
+  if (solved >= total - 2) return lang === 'zh' ? '\u903b\u8f91\u5f3a\u8005' : 'Logic Expert';
+  if (solved >= Math.ceil(total * 0.6)) return lang === 'zh' ? '\u8fdb\u9636\u5b66\u8005' : 'Advanced Learner';
+  if (solved >= Math.ceil(total * 0.4)) return lang === 'zh' ? '\u7a33\u5b9a\u8fdb\u6b65' : 'Steady Improver';
+  return lang === 'zh' ? '\u6f5c\u529b\u65b0\u661f' : 'Rising Starter';
+}
 function getSuggestedNextStep(accuracy) {
   if (accuracy >= 85) return t('suggestionHigh');
   if (accuracy >= 60) return t('suggestionMid');
@@ -2088,6 +2100,8 @@ function applyLanguage() {
 
   overlayTitle.textContent = t('overlayTitle');
   overlayText.textContent = t('overlayText');
+  if (resultStageLabel) resultStageLabel.textContent = t('resultStageLabel') + ':';
+  if (resultStage) resultStage.textContent = getStageTitleBySolved(state.solved, state.roundGoal || 10);
   resultCloseBtn.textContent = t('resultDone');
   feedbackTitle.textContent = t('feedbackTitle');
   feedbackAsk.textContent = t('feedbackAsk');
@@ -2168,6 +2182,7 @@ function finishGame() {
 
   resultFinalScore.textContent = String(state.score);
   resultAccuracy.textContent = accuracy + '%';
+  if (resultStage) resultStage.textContent = getStageTitleBySolved(state.solved, state.roundGoal);
   resultSuggestion.textContent = getSuggestedNextStep(accuracy);
 
   setStatus('statusWin');

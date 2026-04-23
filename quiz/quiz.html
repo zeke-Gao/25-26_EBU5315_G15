@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Circle Geometry Learning Test</title>
-  <link rel="stylesheet" href="test.css" />
+  <title>Circle Geometry Learning Quiz</title>
+  <link rel="stylesheet" href="quiz.css" />
 </head>
 <body>
   <div class="page-shell">
@@ -68,7 +68,7 @@
 
     <section class="bottom-controls" aria-label="Controls">
       <div class="control-buttons">
-        <button id="startBtn" class="btn-primary" aria-label="Start test">Start test</button>
+        <button id="startBtn" class="btn-primary" aria-label="Start quiz">Start quiz</button>
         <button id="resetBtn" class="btn-ghost" aria-label="Reset test">Reset</button>
       </div>
 
@@ -91,6 +91,7 @@
         <p id="overlayText">You have completed this round.</p>
         <p><strong>Final score:</strong> <span id="resultFinalScore">0</span></p>
         <p><strong>Accuracy:</strong> <span id="resultAccuracy">0%</span></p>
+        <p><strong id="resultStageLabel">Stage:</strong> <span id="resultStage">--</span></p>
         <p><strong>Suggested next step:</strong> <span id="resultSuggestion">--</span></p>
         <button id="resultCloseBtn" class="btn-primary" aria-label="Done">Done</button>
       </div>
@@ -115,6 +116,6 @@
     </div>
   </div>
 
-  <script src="test.js"></script>
+  <script src="quiz.js"></script>
 </body>
 </html>
