@@ -34,16 +34,35 @@
         aria-label="大鹅高阶几何实验区"
         data-text-mode-sandbox="纯数学沙盒：拖动 16 个参数滑杆，实时观察解析几何模型的连续变形。"
         data-text-mode-challenge="单局挑战：系统随机生成目标大鹅，请调节你的参数向量以提高重合度。"
+        data-text-mode-pizza="披萨切片挑战：拖动角度滑杆，切出满足顾客订单的扇形。"
         data-text-status-ready-sandbox="沙盒已就绪：可自由观察参数与图形映射关系。"
         data-text-status-ready-challenge="挑战已就绪：请将你的模型与虚线目标尽量重合。"
+        data-text-status-ready-pizza="披萨挑战已就绪：拖动角度并提交切片。"
         data-text-status-new-target="已生成随机目标，并重置你的参数向量。"
         data-text-status-match-good="重合优秀，相似度 = {score}%。"
         data-text-status-match-keep="当前相似度 = {score}%，继续微调。"
+        data-text-status-pizza-good="切片准确，披萨得分 = {score}。"
+        data-text-status-pizza-keep="尚未精确匹配，误差 = {error}，继续调整。"
+        data-text-status-pizza-calc-good="面积计算正确，披萨得分 = {score}。"
+        data-text-status-pizza-calc-keep="面积计算有偏差，系数误差 = {error}。"
         data-text-table-param="参数"
         data-text-table-target="目标值"
         data-text-table-delta="绝对误差"
         data-text-legend-player="玩家模型"
         data-text-legend-target="目标模型"
+        data-text-pizza-order-arc="半径 R = {radius}。请切出弧长等于 {value} 的扇形。"
+        data-text-pizza-order-area="半径 R = {radius}。请切出面积等于 {value} cm² 的扇形。"
+        data-text-pizza-radius="当前披萨半径：R = {radius}"
+        data-text-pizza-score="得分"
+        data-text-pizza-arc-label="弧长边"
+        data-text-pizza-radius-label="半径边"
+        data-text-pizza-submode-slice="切片匹配"
+        data-text-pizza-submode-calc="面积计算"
+        data-text-pizza-calc-order="已知半径 R = {radius}，圆心角 theta = {theta}°，请计算扇形面积（单位 cm²）。"
+        data-text-pizza-calc-order-rt="已知半径 R = {radius} cm、圆心角 θ = {theta}°，求扇形面积 S（cm²）。"
+        data-text-pizza-calc-order-lr="已知弧长 L = {arc} cm、半径 R = {radius} cm，求扇形面积 S（cm²）。"
+        data-text-pizza-calc-order-lt="已知弧长 L = {arc} cm、圆心角 θ = {theta}°，求扇形面积 S（cm²）。"
+        data-text-pizza-calc-hint="请输入面积表达式。"
         data-text-show-panel="显示面板"
         data-text-hide-panel="隐藏面板"
       >
@@ -56,6 +75,7 @@
           <div class="game-toolbar-actions" role="group" aria-label="模式与面板控制">
             <button class="btn ghost game-tab-btn" id="mode-sandbox-btn">沙盒模式</button>
             <button class="btn ghost game-tab-btn" id="mode-challenge-btn">重合匹配挑战</button>
+            <button class="btn ghost game-tab-btn" id="mode-pizza-btn">披萨挑战模式</button>
             <button class="btn ghost" id="panel-toggle-btn">隐藏面板</button>
           </div>
         </header>
@@ -68,7 +88,7 @@
               <p class="mode-text" id="status-text" role="status" aria-live="polite"></p>
             </section>
 
-            <section class="game-card">
+            <section class="game-card goose-only-card">
               <h2>模块 A - 旋转椭圆模型</h2>
               <div class="slider-list" id="module-a-sliders">
                 <label class="slider-item" for="param-x1"><span>X1_center</span><output id="value-x1">0.00</output></label>
@@ -103,7 +123,7 @@
               </div>
             </section>
 
-            <section class="game-card">
+            <section class="game-card goose-only-card">
               <h2>模块 B - 三次贝塞尔模型</h2>
               <div class="slider-list">
                 <label class="slider-item" for="param-l"><span>L</span><output id="value-l">4.20</output></label>
@@ -117,7 +137,7 @@
               </div>
             </section>
 
-            <section class="game-card">
+            <section class="game-card goose-only-card">
               <h2>模块 C - 对称椭圆模型</h2>
               <div class="slider-list">
                 <label class="slider-item" for="param-d"><span>D</span><output id="value-d">0.62</output></label>
@@ -135,7 +155,7 @@
               </div>
             </section>
 
-            <section class="game-card equation-card">
+            <section class="game-card equation-card goose-only-card">
               <h2>方程控制台</h2>
               <p><strong>E1</strong> <code id="eq-e1"></code></p>
               <p><strong>E2</strong> <code id="eq-e2"></code></p>
@@ -144,7 +164,7 @@
               <p><strong>E3_pair</strong> <code id="eq-eye"></code></p>
             </section>
 
-            <section class="game-card challenge-card" id="challenge-card">
+            <section class="game-card challenge-card goose-only-card" id="challenge-card">
               <h2>目标参数控制台</h2>
               <div class="challenge-metrics">
                 <p><strong>相似度</strong> <span id="similarity-value">--</span></p>
@@ -154,6 +174,43 @@
               <div class="panel-actions">
                 <button class="btn primary" id="new-target-btn">随机新目标</button>
                 <button class="btn ghost" id="check-match-btn">评估重合</button>
+              </div>
+            </section>
+
+            <section class="game-card pizza-card is-hidden" id="pizza-card">
+              <h2>披萨切片挑战</h2>
+              <div class="pizza-submode-switch" role="group" aria-label="披萨玩法切换">
+                <button class="btn ghost is-active" id="pizza-submode-slice-btn">切片匹配</button>
+                <button class="btn ghost" id="pizza-submode-calc-btn">面积计算</button>
+              </div>
+              <div class="pizza-metrics">
+                <p><strong>得分</strong> <span id="pizza-score-value">0</span></p>
+              </div>
+
+              <div class="pizza-section" id="pizza-slice-section">
+                <p class="pizza-order-text" id="pizza-order-text"></p>
+                <p class="pizza-radius-text" id="pizza-radius-text"></p>
+                <div class="slider-list pizza-slider-wrap">
+                  <label class="slider-item" for="pizza-angle-slider">
+                    <span>切割角度 (theta)</span>
+                    <output id="pizza-angle-value">90°</output>
+                  </label>
+                  <input id="pizza-angle-slider" type="range" min="0" max="360" step="1" value="90" />
+                </div>
+                <div class="panel-actions">
+                  <button class="btn primary" id="pizza-submit-btn">提交切片</button>
+                </div>
+              </div>
+
+              <div class="pizza-section is-hidden" id="pizza-calc-section">
+                <p class="pizza-order-text" id="pizza-calc-order-text"></p>
+                <div class="pizza-answer-row">
+                  <label for="pizza-area-answer-input">S = </label>
+                  <input id="pizza-area-answer-input" type="text" inputmode="text" placeholder="请输入 S" />
+                </div>
+                <div class="panel-actions">
+                  <button class="btn primary" id="pizza-area-submit-btn">提交面积</button>
+                </div>
               </div>
             </section>
           </aside>

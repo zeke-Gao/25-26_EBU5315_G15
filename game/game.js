@@ -13,14 +13,30 @@
   const els = {
     modeSandboxBtn: document.getElementById("mode-sandbox-btn"),
     modeChallengeBtn: document.getElementById("mode-challenge-btn"),
+    modePizzaBtn: document.getElementById("mode-pizza-btn"),
     panelToggleBtn: document.getElementById("panel-toggle-btn"),
     panelReopenBtn: document.getElementById("panel-reopen-btn"),
     modeDescription: document.getElementById("mode-description"),
     statusText: document.getElementById("status-text"),
     challengeCard: document.getElementById("challenge-card"),
+    pizzaCard: document.getElementById("pizza-card"),
     targetGrid: document.getElementById("target-grid"),
     newTargetBtn: document.getElementById("new-target-btn"),
     checkMatchBtn: document.getElementById("check-match-btn"),
+    pizzaOrderText: document.getElementById("pizza-order-text"),
+    pizzaRadiusText: document.getElementById("pizza-radius-text"),
+    pizzaScoreValue: document.getElementById("pizza-score-value"),
+    pizzaSubmodeSliceBtn: document.getElementById("pizza-submode-slice-btn"),
+    pizzaSubmodeCalcBtn: document.getElementById("pizza-submode-calc-btn"),
+    pizzaSliceSection: document.getElementById("pizza-slice-section"),
+    pizzaCalcSection: document.getElementById("pizza-calc-section"),
+    pizzaCalcOrderText: document.getElementById("pizza-calc-order-text"),
+    pizzaCalcHintText: document.getElementById("pizza-calc-hint-text"),
+    pizzaAreaAnswerInput: document.getElementById("pizza-area-answer-input"),
+    pizzaAreaSubmitBtn: document.getElementById("pizza-area-submit-btn"),
+    pizzaAngleSlider: document.getElementById("pizza-angle-slider"),
+    pizzaAngleValue: document.getElementById("pizza-angle-value"),
+    pizzaSubmitBtn: document.getElementById("pizza-submit-btn"),
     resetPlayerBtn: document.getElementById("reset-player-btn"),
     similarityValue: document.getElementById("similarity-value"),
     attemptsValue: document.getElementById("attempts-value"),
@@ -38,6 +54,7 @@
     target: "orbit_goose_target",
     attempts: "orbit_goose_attempts",
     similarity: "orbit_goose_similarity",
+    pizza: "orbit_goose_pizza",
   };
 
   const TEXT = {
@@ -47,16 +64,46 @@
     modeChallenge:
       root.dataset.textModeChallenge ||
       "Challenge mode: a random target goose is generated; tune your parameter vector to maximize overlap.",
+    modePizza:
+      root.dataset.textModePizza ||
+      "Pizza Slicer: use the angle slider to cut a sector that matches each customer order.",
     statusReadySandbox: root.dataset.textStatusReadySandbox || "Sandbox ready.",
     statusReadyChallenge: root.dataset.textStatusReadyChallenge || "Challenge ready.",
+    statusReadyPizza: root.dataset.textStatusReadyPizza || "Pizza challenge ready. Drag angle and submit your slice.",
     statusNewTarget: root.dataset.textStatusNewTarget || "New random target generated.",
     statusMatchGood: root.dataset.textStatusMatchGood || "Excellent overlap. Similarity = {score}%.",
     statusMatchKeep: root.dataset.textStatusMatchKeep || "Current similarity = {score}%. Keep tuning.",
+    statusPizzaGood: root.dataset.textStatusPizzaGood || "Perfect slice. Pizza score = {score}.",
+    statusPizzaKeep: root.dataset.textStatusPizzaKeep || "Not exact yet. Error = {error}. Keep adjusting.",
+    statusPizzaCalcGood: root.dataset.textStatusPizzaCalcGood || "Correct area. Pizza score = {score}.",
+    statusPizzaCalcKeep: root.dataset.textStatusPizzaCalcKeep || "Area is off. Coefficient error = {error}.",
     tableParam: root.dataset.textTableParam || "parameter",
     tableTarget: root.dataset.textTableTarget || "target",
     tableDelta: root.dataset.textTableDelta || "abs error",
     legendPlayer: root.dataset.textLegendPlayer || "player",
     legendTarget: root.dataset.textLegendTarget || "target",
+    pizzaOrderArc:
+      root.dataset.textPizzaOrderArc || "Radius R = {radius}. Slice a sector whose arc length equals {value}.",
+    pizzaOrderArea:
+      root.dataset.textPizzaOrderArea || "Radius R = {radius}. Slice a sector whose area equals {value} cm².",
+    pizzaRadius: root.dataset.textPizzaRadius || "Current pizza radius: R = {radius}",
+    pizzaScore: root.dataset.textPizzaScore || "Score",
+    pizzaArcLabel: root.dataset.textPizzaArcLabel || "arc edge",
+    pizzaRadiusLabel: root.dataset.textPizzaRadiusLabel || "radius edge",
+    pizzaSubmodeSlice: root.dataset.textPizzaSubmodeSlice || "Slice Matching",
+    pizzaSubmodeCalc: root.dataset.textPizzaSubmodeCalc || "Area Calculation",
+    pizzaCalcOrder:
+      root.dataset.textPizzaCalcOrder || "Given radius R = {radius} and theta = {theta}°, compute the sector area in cm².",
+    pizzaCalcOrderRT:
+      root.dataset.textPizzaCalcOrderRt ||
+      "Given radius R = {radius} cm and central angle θ = {theta}°, compute sector area S (cm²).",
+    pizzaCalcOrderLR:
+      root.dataset.textPizzaCalcOrderLr ||
+      "Given arc length L = {arc} cm and radius R = {radius} cm, compute sector area S (cm²).",
+    pizzaCalcOrderLT:
+      root.dataset.textPizzaCalcOrderLt ||
+      "Given arc length L = {arc} cm and central angle θ = {theta}°, compute sector area S (cm²).",
+    pizzaCalcHint: root.dataset.textPizzaCalcHint || "Enter area expression.",
     showPanel: root.dataset.textShowPanel || "Show Panel",
     hidePanel: root.dataset.textHidePanel || "Hide Panel",
   };
@@ -64,9 +111,14 @@
   const STATUS_TEMPLATES = {
     readySandbox: TEXT.statusReadySandbox,
     readyChallenge: TEXT.statusReadyChallenge,
+    readyPizza: TEXT.statusReadyPizza,
     newTarget: TEXT.statusNewTarget,
     matchGood: TEXT.statusMatchGood,
     matchKeep: TEXT.statusMatchKeep,
+    pizzaGood: TEXT.statusPizzaGood,
+    pizzaKeep: TEXT.statusPizzaKeep,
+    pizzaCalcGood: TEXT.statusPizzaCalcGood,
+    pizzaCalcKeep: TEXT.statusPizzaCalcKeep,
   };
 
   const PARAMS = [
@@ -120,6 +172,39 @@
     yMax: 8,
   };
 
+  const PIZZA_IMAGE_SOURCES = [
+    "assets/pizza-real.png",
+    "assets/assets:pizza-real.png",
+    "assets/pizza-real-2.png",
+    "assets/assets:pizza-real-2.png",
+    "assets/pizza-real-3.png",
+    "assets/pizza-2.png",
+    "assets/pizza-3.png",
+    "assets/pizza-alt.png",
+    "assets/pizza-new.png",
+    "assets/pizza-bacon.png",
+    "assets/pizza-real.jpg",
+    "assets/pizza-real-2.jpg",
+    "assets/pizza-real-3.jpg",
+    "assets/pizza-2.jpg",
+    "assets/pizza-3.jpg",
+    "assets/pizza-alt.jpg",
+    "assets/pizza-new.jpg",
+    "assets/pizza-bacon.jpg",
+    "assets/pizza-real.webp",
+    "assets/pizza-real-2.webp",
+    "assets/pizza-2.webp",
+    "assets/pizza.webp",
+    "assets/pizza-photo.png",
+    "assets/pizza-photo.jpg",
+    "assets/pizza.png",
+    "assets/pizza.jpg",
+    "pizza-real.png",
+    "pizza-real.jpg",
+    "pizza.png",
+    "pizza.jpg",
+  ];
+
   const PALETTE_NORMAL = {
     canvasBg: "#f7fbff",
     axis: "#4f6fa3",
@@ -159,6 +244,32 @@
     target: "#d94801",
   };
 
+  const PALETTE_CB_DARK = {
+    canvasBg: "#071522",
+    axis: "#7dd3fc",
+    major: "#2b5a79",
+    minor: "#1c3f56",
+    tick: "#bae6fd",
+    legendBg: "rgba(7,21,34,0.86)",
+    legendText: "#e0f2fe",
+    player: "#38bdf8",
+    playerFill: "rgba(56,189,248,0.14)",
+    target: "#f59e0b",
+  };
+
+  const PALETTE_EYE = {
+    canvasBg: "#f6f2e7",
+    axis: "#8b5e34",
+    major: "#c5a97a",
+    minor: "#e4d5b8",
+    tick: "#6e4c2e",
+    legendBg: "rgba(252,250,244,0.9)",
+    legendText: "#1f2937",
+    player: "#0ea5a4",
+    playerFill: "rgba(14,165,164,0.12)",
+    target: "#b45309",
+  };
+
   const state = {
     mode: "sandbox",
     panelCollapsed: false,
@@ -166,6 +277,29 @@
     target: null,
     attempts: 0,
     similarity: null,
+    pizza: {
+      subMode: "slice",
+      radius: 10,
+      thetaDeg: 90,
+      targetType: "arc",
+      targetValue: 0,
+      targetCoeff: 0,
+      targetThetaDeg: 90,
+      orderText: "",
+      calcRadius: 10,
+      calcThetaDeg: 90,
+      calcArcCoeff: 5,
+      calcQuestionType: "rt",
+      calcTargetCoeff: 0,
+      calcOrderText: "",
+      calcAnswerRaw: "",
+      calcAnswerCoeff: null,
+      score: 0,
+      level: 1,
+      toppings: [],
+      flashUntil: 0,
+      flashRaf: 0,
+    },
     statusKey: "readySandbox",
     statusVars: {},
     width: 1,
@@ -173,6 +307,15 @@
     scale: 1,
     offsetX: 0,
     offsetY: 0,
+  };
+
+  const pizzaTexture = {
+    images: [],
+    currentIndex: -1,
+    lastIndex: -1,
+    ready: false,
+    attempted: false,
+    loadedSources: new Set(),
   };
 
   function safeGet(key) {
@@ -208,8 +351,123 @@
     return Number(v).toFixed(d);
   }
 
+  function degreesToRadians(deg) {
+    return (deg * Math.PI) / 180;
+  }
+
+  function randomPick(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+
+  function pickPizzaCalcQuestionType() {
+    const r = Math.random();
+    if (r < 0.15) return "rt";
+    if (r < 0.575) return "lr";
+    return "lt";
+  }
+
+  function formatPiTerm(value) {
+    const abs = Math.abs(value);
+    const sign = value < 0 ? "-" : "";
+    if (Math.abs(abs - 1) < 1e-9) return sign + "π";
+    const decimals = abs >= 20 ? 0 : abs >= 10 ? 1 : 2;
+    return sign + fixed(abs, decimals).replace(/\.0+$/, "").replace(/(\.\d*[1-9])0+$/, "$1") + "π";
+  }
+
+  function normalizePiText(text) {
+    if (typeof text !== "string") return "";
+    return text.replace(/pi/gi, "π");
+  }
+
+  function parsePizzaAreaAnswerCoeff(raw) {
+    if (typeof raw !== "string") return null;
+    let text = raw.trim();
+    if (!text) return null;
+
+    text = text
+      .replace(/\s+/g, "")
+      .replace(/，/g, ",")
+      .replace(/[Ｐｐ]/g, "p")
+      .replace(/[Ｉｉ]/g, "i")
+      .replace(/π/g, "pi")
+      .replace(/^s=/i, "")
+      .replace(/^a=/i, "")
+      .replace(/cm²/gi, "")
+      .replace(/cm\^2/gi, "")
+      .replace(/cm2/gi, "");
+
+    if (!text) return null;
+
+    if (text.includes("pi")) {
+      let coeff = text.split("pi")[0];
+      coeff = coeff.replace(/\*$/g, "");
+      if (coeff === "" || coeff === "+") return 1;
+      if (coeff === "-") return -1;
+      const v = Number(coeff);
+      return Number.isFinite(v) ? v : null;
+    }
+
+    const v = Number(text);
+    return Number.isFinite(v) ? v : null;
+  }
+
   function interpolate(template, vars = {}) {
     return template.replace(/\{(\w+)\}/g, (_, name) => (vars[name] != null ? String(vars[name]) : ""));
+  }
+
+  function loadPizzaTexture(forceRetry = false) {
+    if (pizzaTexture.attempted && !forceRetry) return;
+    pizzaTexture.attempted = true;
+
+    if (forceRetry) {
+      pizzaTexture.images = [];
+      pizzaTexture.loadedSources = new Set();
+      pizzaTexture.currentIndex = -1;
+      pizzaTexture.lastIndex = -1;
+      pizzaTexture.ready = false;
+    }
+
+    const sources = PIZZA_IMAGE_SOURCES.slice();
+    sources.forEach((src) => {
+      const img = new Image();
+      img.onload = () => {
+        if (pizzaTexture.loadedSources.has(src)) return;
+        pizzaTexture.loadedSources.add(src);
+        pizzaTexture.images.push({ src, img });
+        pizzaTexture.ready = pizzaTexture.images.length > 0;
+        if (pizzaTexture.currentIndex < 0) {
+          pizzaTexture.currentIndex = 0;
+          pizzaTexture.lastIndex = 0;
+        }
+        render();
+      };
+      img.onerror = () => {
+        // ignore missing files
+      };
+      img.src = src;
+    });
+  }
+
+  function chooseNextPizzaImage() {
+    const count = pizzaTexture.images.length;
+    if (count <= 0) return;
+    if (count === 1) {
+      pizzaTexture.currentIndex = 0;
+      pizzaTexture.lastIndex = 0;
+      return;
+    }
+    let next = Math.floor(Math.random() * count);
+    if (next === pizzaTexture.lastIndex) {
+      next = (next + 1 + Math.floor(Math.random() * (count - 1))) % count;
+    }
+    pizzaTexture.currentIndex = next;
+    pizzaTexture.lastIndex = next;
+  }
+
+  function currentPizzaImage() {
+    if (!pizzaTexture.ready || pizzaTexture.images.length <= 0) return null;
+    const idx = clamp(pizzaTexture.currentIndex, 0, pizzaTexture.images.length - 1);
+    return pizzaTexture.images[idx].img;
   }
 
   function isColorBlindMode() {
@@ -220,12 +478,15 @@
     return document.body.getAttribute("data-theme") === "dark";
   }
 
+  function isEyeThemeMode() {
+    return document.body.getAttribute("data-theme") === "eye";
+  }
+
   function palette() {
-    // 增加这一行：当同时开启暗黑+色弱时，强制使用暗黑画板配色
-    if (isDarkThemeMode() && isColorBlindMode()) return PALETTE_DARK; 
-    
+    if (isDarkThemeMode() && isColorBlindMode()) return PALETTE_CB_DARK;
     if (isColorBlindMode()) return PALETTE_CB;
     if (isDarkThemeMode()) return PALETTE_DARK;
+    if (isEyeThemeMode()) return PALETTE_EYE;
     return PALETTE_NORMAL;
   }
 
@@ -248,6 +509,114 @@
       out[meta.key] = Number((meta.min + idx * meta.step).toFixed(meta.digits));
     });
     return out;
+  }
+
+  function createPizzaToppings(radius) {
+    const colors = ["#ef4444", "#f97316", "#7c3aed", "#16a34a", "#ca8a04"];
+    const count = 8 + Math.floor(radius / 2);
+    const out = [];
+    for (let i = 0; i < count; i += 1) {
+      const angle = Math.random() * Math.PI * 2;
+      const dist = radius * (0.2 + Math.random() * 0.62);
+      out.push({
+        x: Math.cos(angle) * dist,
+        y: Math.sin(angle) * dist,
+        r: 0.26 + Math.random() * 0.25,
+        c: randomPick(colors),
+      });
+    }
+    return out;
+  }
+
+  function activePizzaRadius() {
+    return state.pizza.subMode === "calc" ? state.pizza.calcRadius : state.pizza.radius;
+  }
+
+  function activePizzaThetaDeg() {
+    return state.pizza.subMode === "calc" ? state.pizza.calcThetaDeg : state.pizza.thetaDeg;
+  }
+
+  function generatePizzaOrder() {
+    const level = Math.max(1, state.pizza.level);
+    const radii = level < 4 ? [8, 10, 12] : [8, 9, 10, 11, 12];
+    const angleStep = level < 3 ? 15 : level < 6 ? 10 : 5;
+    const candidates = [];
+    for (let angle = 30; angle <= 330; angle += angleStep) {
+      candidates.push(angle);
+    }
+
+    state.pizza.radius = randomPick(radii);
+    state.pizza.targetThetaDeg = randomPick(candidates);
+    state.pizza.targetType = Math.random() < 0.5 ? "arc" : "area";
+
+    if (state.pizza.targetType === "arc") {
+      state.pizza.targetCoeff = (state.pizza.targetThetaDeg * state.pizza.radius) / 180;
+      state.pizza.targetValue = state.pizza.targetCoeff * Math.PI;
+      state.pizza.orderText = normalizePiText(interpolate(TEXT.pizzaOrderArc, {
+        radius: state.pizza.radius,
+        value: formatPiTerm(state.pizza.targetCoeff),
+      }));
+    } else {
+      state.pizza.targetCoeff = (state.pizza.targetThetaDeg * state.pizza.radius * state.pizza.radius) / 360;
+      state.pizza.targetValue = state.pizza.targetCoeff * Math.PI;
+      state.pizza.orderText = normalizePiText(interpolate(TEXT.pizzaOrderArea, {
+        radius: state.pizza.radius,
+        value: formatPiTerm(state.pizza.targetCoeff),
+      }));
+    }
+
+    state.pizza.thetaDeg = 90;
+    state.pizza.toppings = createPizzaToppings(state.pizza.radius);
+    chooseNextPizzaImage();
+  }
+
+  function generatePizzaCalcOrder() {
+    const level = Math.max(1, state.pizza.level);
+    const radii = level < 4 ? [8, 10, 12] : [8, 9, 10, 11, 12];
+    const angleStep = level < 3 ? 20 : level < 6 ? 15 : 10;
+    const candidates = [];
+    for (let angle = 30; angle <= 330; angle += angleStep) {
+      candidates.push(angle);
+    }
+
+    state.pizza.calcRadius = randomPick(radii);
+    state.pizza.calcThetaDeg = randomPick(candidates);
+    state.pizza.calcArcCoeff = (state.pizza.calcThetaDeg * state.pizza.calcRadius) / 180;
+    state.pizza.calcQuestionType = pickPizzaCalcQuestionType();
+
+    const arcText = formatPiTerm(state.pizza.calcArcCoeff);
+    if (state.pizza.calcQuestionType === "lr") {
+      state.pizza.calcTargetCoeff = (state.pizza.calcArcCoeff * state.pizza.calcRadius) / 2;
+      state.pizza.calcOrderText = normalizePiText(interpolate(TEXT.pizzaCalcOrderLR, {
+        arc: arcText,
+        radius: state.pizza.calcRadius,
+      }));
+    } else if (state.pizza.calcQuestionType === "lt") {
+      state.pizza.calcTargetCoeff = (90 * state.pizza.calcArcCoeff * state.pizza.calcArcCoeff) / state.pizza.calcThetaDeg;
+      state.pizza.calcOrderText = normalizePiText(interpolate(TEXT.pizzaCalcOrderLT, {
+        arc: arcText,
+        theta: state.pizza.calcThetaDeg,
+      }));
+    } else {
+      state.pizza.calcTargetCoeff = (state.pizza.calcThetaDeg * state.pizza.calcRadius * state.pizza.calcRadius) / 360;
+      state.pizza.calcOrderText = normalizePiText(interpolate(TEXT.pizzaCalcOrderRT, {
+        radius: state.pizza.calcRadius,
+        theta: state.pizza.calcThetaDeg,
+      }));
+    }
+
+    state.pizza.calcAnswerRaw = "";
+    state.pizza.calcAnswerCoeff = null;
+    state.pizza.toppings = createPizzaToppings(state.pizza.calcRadius);
+    chooseNextPizzaImage();
+  }
+
+  function currentPizzaMeasurement() {
+    const thetaRad = degreesToRadians(state.pizza.thetaDeg);
+    if (state.pizza.targetType === "arc") {
+      return thetaRad * state.pizza.radius;
+    }
+    return (thetaRad * state.pizza.radius * state.pizza.radius) / 2;
   }
 
   function getBFromAE(a, e) {
@@ -542,6 +911,170 @@
     drawQuadratic(geo.leg2.top, geo.leg2.knee, geo.leg2.end, style);
   }
 
+  function drawPizzaScene(theme) {
+    loadPizzaTexture();
+
+    const center = {
+      x: state.width * 0.52,
+      y: state.height * 0.52,
+    };
+    const radiusPx = Math.max(120, Math.min(state.width, state.height) * 0.36);
+
+    const crustColor = isColorBlindMode() ? "#8a6a00" : "#b45309";
+    const cheeseColor = isDarkThemeMode() ? "#f59e0b" : isEyeThemeMode() ? "#f2c14e" : "#fbbf24";
+    const sauceColor = isDarkThemeMode() ? "#f97316" : isEyeThemeMode() ? "#d97706" : "#fb923c";
+    const sliceColor = isColorBlindMode() ? "#005eb8" : "#f43f5e";
+    const currentImage = currentPizzaImage();
+    const activeThetaDeg = activePizzaThetaDeg();
+    const activeRadius = activePizzaRadius();
+
+    ctx.save();
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, radiusPx, 0, Math.PI * 2);
+    ctx.clip();
+
+    if (pizzaTexture.ready && currentImage) {
+      const img = currentImage;
+      const srcMin = Math.min(img.width, img.height);
+      const cropScale = 0.76;
+      const cropSize = srcMin * cropScale;
+      const sx = (img.width - cropSize) * 0.5;
+      const sy = (img.height - cropSize) * 0.5;
+
+      ctx.drawImage(
+        img,
+        sx,
+        sy,
+        cropSize,
+        cropSize,
+        center.x - radiusPx,
+        center.y - radiusPx,
+        radiusPx * 2,
+        radiusPx * 2
+      );
+      const shine = ctx.createRadialGradient(
+        center.x - radiusPx * 0.24,
+        center.y - radiusPx * 0.3,
+        radiusPx * 0.18,
+        center.x,
+        center.y,
+        radiusPx
+      );
+      shine.addColorStop(0, "rgba(255,255,255,0.18)");
+      shine.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.fillStyle = shine;
+      ctx.fillRect(center.x - radiusPx, center.y - radiusPx, radiusPx * 2, radiusPx * 2);
+    } else {
+      ctx.beginPath();
+      ctx.arc(center.x, center.y, radiusPx, 0, Math.PI * 2);
+      ctx.fillStyle = sauceColor;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(center.x, center.y, radiusPx * 0.89, 0, Math.PI * 2);
+      ctx.fillStyle = cheeseColor;
+      ctx.fill();
+
+      state.pizza.toppings.forEach((top) => {
+        const scale = radiusPx / Math.max(1, activeRadius);
+        const p = {
+          x: center.x + top.x * scale,
+          y: center.y - top.y * scale,
+        };
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, top.r * scale, 0, Math.PI * 2);
+        ctx.fillStyle = top.c;
+        ctx.globalAlpha = 0.84;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+    }
+
+    ctx.restore();
+
+    const theta = degreesToRadians(activeThetaDeg);
+    const startAngle = -Math.PI / 2;
+    const midAngle = startAngle + theta / 2;
+    const explode = radiusPx * 0.035;
+    const sliceRadius = radiusPx * 0.985;
+    const cx = center.x + Math.cos(midAngle) * explode;
+    const cy = center.y + Math.sin(midAngle) * explode;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, sliceRadius, startAngle, startAngle + theta);
+    ctx.closePath();
+    ctx.fillStyle = sliceColor;
+    ctx.globalAlpha = 0.32;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = sliceColor;
+    ctx.lineWidth = 2.4;
+    ctx.stroke();
+
+    const r1x = cx + Math.cos(startAngle) * sliceRadius;
+    const r1y = cy + Math.sin(startAngle) * sliceRadius;
+    const r2x = cx + Math.cos(startAngle + theta) * sliceRadius;
+    const r2y = cy + Math.sin(startAngle + theta) * sliceRadius;
+    ctx.strokeStyle = theme.axis;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(r1x, r1y);
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(r2x, r2y);
+    ctx.stroke();
+
+    if (activeThetaDeg > 4) {
+      ctx.strokeStyle = theme.tick;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(cx, cy, sliceRadius, startAngle, startAngle + theta);
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = theme.legendText;
+    ctx.font = "12px 'Avenir Next', 'Trebuchet MS', sans-serif";
+    const arcLabelAngle = startAngle + theta * 0.65;
+    const arcLabelX = cx + Math.cos(arcLabelAngle) * sliceRadius * 1.03;
+    const arcLabelY = cy + Math.sin(arcLabelAngle) * sliceRadius * 1.03;
+    ctx.fillText(TEXT.pizzaArcLabel, arcLabelX - 18, arcLabelY);
+
+    const radiusLabelX = cx + Math.cos(startAngle + theta) * sliceRadius * 0.52;
+    const radiusLabelY = cy + Math.sin(startAngle + theta) * sliceRadius * 0.52;
+    ctx.fillText(TEXT.pizzaRadiusLabel, radiusLabelX - 18, radiusLabelY - 4);
+
+    const thetaText = "theta = " + fixed(activeThetaDeg, 1) + "°";
+    ctx.fillStyle = theme.legendBg;
+    ctx.fillRect(14, 14, 160, 26);
+    ctx.fillStyle = theme.legendText;
+    ctx.fillText(thetaText, 22, 31);
+
+    if (state.pizza.flashUntil > 0) {
+      const now = performance.now();
+      if (now < state.pizza.flashUntil) {
+        const t = (state.pizza.flashUntil - now) / 420;
+        ctx.strokeStyle = isColorBlindMode() ? "#005eb8" : "#22c55e";
+        ctx.globalAlpha = Math.max(0, Math.min(1, t));
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.arc(center.x, center.y, radiusPx + 16 * (1 - t), 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, radiusPx, 0, Math.PI * 2);
+    ctx.strokeStyle = pizzaTexture.ready ? "rgba(180, 83, 9, 0.55)" : crustColor;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.restore();
+  }
+
   function drawLegend(theme) {
     const width = state.mode === "challenge" ? 250 : 140;
     ctx.save();
@@ -575,6 +1108,15 @@
 
   function render() {
     const theme = palette();
+
+    if (state.mode === "pizza") {
+      ctx.clearRect(0, 0, state.width, state.height);
+      ctx.fillStyle = isDarkThemeMode() ? "#101827" : isEyeThemeMode() ? "#f6f2e7" : "#f6f1e7";
+      ctx.fillRect(0, 0, state.width, state.height);
+      drawPizzaScene(theme);
+      return;
+    }
+
     drawGrid(theme);
 
     if (state.mode === "challenge" && state.target) {
@@ -775,6 +1317,60 @@
     return Number(Math.max(0, (1 - averageError) * 100).toFixed(2));
   }
 
+  function updatePizzaUI() {
+    if (els.pizzaSubmodeSliceBtn) {
+      els.pizzaSubmodeSliceBtn.textContent = TEXT.pizzaSubmodeSlice;
+      els.pizzaSubmodeSliceBtn.classList.toggle("is-active", state.pizza.subMode === "slice");
+    }
+    if (els.pizzaSubmodeCalcBtn) {
+      els.pizzaSubmodeCalcBtn.textContent = TEXT.pizzaSubmodeCalc;
+      els.pizzaSubmodeCalcBtn.classList.toggle("is-active", state.pizza.subMode === "calc");
+    }
+    if (els.pizzaSliceSection) {
+      els.pizzaSliceSection.classList.toggle("is-hidden", state.pizza.subMode !== "slice");
+    }
+    if (els.pizzaCalcSection) {
+      els.pizzaCalcSection.classList.toggle("is-hidden", state.pizza.subMode !== "calc");
+    }
+
+    if (els.pizzaOrderText) {
+      els.pizzaOrderText.textContent = normalizePiText(state.pizza.orderText || "");
+    }
+    if (els.pizzaRadiusText) {
+      els.pizzaRadiusText.textContent = interpolate(TEXT.pizzaRadius, { radius: state.pizza.radius });
+    }
+    if (els.pizzaScoreValue) {
+      els.pizzaScoreValue.textContent = String(state.pizza.score);
+    }
+    if (els.pizzaAngleSlider) {
+      els.pizzaAngleSlider.value = String(state.pizza.thetaDeg);
+      els.pizzaAngleSlider.disabled = state.mode !== "pizza" || state.pizza.subMode !== "slice";
+    }
+    if (els.pizzaAngleValue) {
+      els.pizzaAngleValue.textContent = fixed(state.pizza.thetaDeg, 1) + "°";
+    }
+    if (els.pizzaSubmitBtn) {
+      els.pizzaSubmitBtn.disabled = state.mode !== "pizza" || state.pizza.subMode !== "slice";
+    }
+    if (els.pizzaCalcOrderText) {
+      els.pizzaCalcOrderText.textContent = normalizePiText(state.pizza.calcOrderText || "");
+    }
+    if (els.pizzaCalcHintText) {
+      els.pizzaCalcHintText.textContent = normalizePiText(TEXT.pizzaCalcHint);
+    }
+    if (els.pizzaAreaAnswerInput) {
+      if (!state.pizza.calcAnswerRaw) {
+        els.pizzaAreaAnswerInput.value = "";
+      } else if (els.pizzaAreaAnswerInput.value !== state.pizza.calcAnswerRaw) {
+        els.pizzaAreaAnswerInput.value = state.pizza.calcAnswerRaw;
+      }
+      els.pizzaAreaAnswerInput.disabled = state.mode !== "pizza" || state.pizza.subMode !== "calc";
+    }
+    if (els.pizzaAreaSubmitBtn) {
+      els.pizzaAreaSubmitBtn.disabled = state.mode !== "pizza" || state.pizza.subMode !== "calc";
+    }
+  }
+
   function updateMetrics() {
     if (els.attemptsValue) {
       els.attemptsValue.textContent = String(state.attempts);
@@ -782,6 +1378,89 @@
     if (els.similarityValue) {
       els.similarityValue.textContent = state.similarity == null ? "--" : fixed(state.similarity, 2) + "%";
     }
+    updatePizzaUI();
+  }
+
+  function runPizzaFlash() {
+    if (state.mode !== "pizza") {
+      state.pizza.flashRaf = 0;
+      return;
+    }
+    if (performance.now() < state.pizza.flashUntil) {
+      render();
+      state.pizza.flashRaf = requestAnimationFrame(runPizzaFlash);
+    } else {
+      state.pizza.flashRaf = 0;
+      render();
+    }
+  }
+
+  function stopPizzaFlash() {
+    if (state.pizza.flashRaf) {
+      cancelAnimationFrame(state.pizza.flashRaf);
+      state.pizza.flashRaf = 0;
+    }
+    state.pizza.flashUntil = 0;
+  }
+
+  function submitPizzaSlice() {
+    if (state.mode !== "pizza" || state.pizza.subMode !== "slice") return;
+    const measured = currentPizzaMeasurement();
+    const error = Math.abs(measured - state.pizza.targetValue);
+    const tolerance = Math.max(0.08, Math.abs(state.pizza.targetValue) * 0.012);
+
+    if (error <= tolerance) {
+      state.pizza.score += 1;
+      state.pizza.level += 1;
+      state.pizza.flashUntil = performance.now() + 420;
+      if (state.pizza.flashRaf) {
+        cancelAnimationFrame(state.pizza.flashRaf);
+      }
+      state.pizza.flashRaf = requestAnimationFrame(runPizzaFlash);
+      setStatus("pizzaGood", { score: state.pizza.score });
+      generatePizzaOrder();
+    } else {
+      setStatus("pizzaKeep", { error: fixed(error, 3) });
+    }
+
+    updateMetrics();
+    render();
+    saveState();
+  }
+
+  function submitPizzaAreaAnswer() {
+    if (state.mode !== "pizza" || state.pizza.subMode !== "calc") return;
+    if (!els.pizzaAreaAnswerInput) return;
+
+    const raw = String(els.pizzaAreaAnswerInput.value || "").trim();
+    state.pizza.calcAnswerRaw = raw;
+    state.pizza.calcAnswerCoeff = parsePizzaAreaAnswerCoeff(raw);
+    if (state.pizza.calcAnswerCoeff == null) {
+      setStatus("pizzaCalcKeep", { error: "invalid" });
+      updateMetrics();
+      saveState();
+      return;
+    }
+
+    const error = Math.abs(state.pizza.calcAnswerCoeff - state.pizza.calcTargetCoeff);
+    const tolerance = Math.max(0.04, Math.abs(state.pizza.calcTargetCoeff) * 0.015);
+    if (error <= tolerance) {
+      state.pizza.score += 1;
+      state.pizza.level += 1;
+      state.pizza.flashUntil = performance.now() + 420;
+      if (state.pizza.flashRaf) {
+        cancelAnimationFrame(state.pizza.flashRaf);
+      }
+      state.pizza.flashRaf = requestAnimationFrame(runPizzaFlash);
+      setStatus("pizzaCalcGood", { score: state.pizza.score });
+      generatePizzaCalcOrder();
+    } else {
+      setStatus("pizzaCalcKeep", { error: fixed(error, 3) });
+    }
+
+    updateMetrics();
+    render();
+    saveState();
   }
 
   function setStatus(statusKey, vars = {}) {
@@ -794,18 +1473,33 @@
   }
 
   function updateModeUI() {
+    root.classList.toggle("is-pizza-mode", state.mode === "pizza");
+
     if (els.modeSandboxBtn) {
       els.modeSandboxBtn.classList.toggle("is-active", state.mode === "sandbox");
     }
     if (els.modeChallengeBtn) {
       els.modeChallengeBtn.classList.toggle("is-active", state.mode === "challenge");
     }
+    if (els.modePizzaBtn) {
+      els.modePizzaBtn.classList.toggle("is-active", state.mode === "pizza");
+    }
     if (els.challengeCard) {
       els.challengeCard.classList.toggle("is-hidden", state.mode !== "challenge");
     }
-    if (els.modeDescription) {
-      els.modeDescription.textContent = state.mode === "sandbox" ? TEXT.modeSandbox : TEXT.modeChallenge;
+    if (els.pizzaCard) {
+      els.pizzaCard.classList.toggle("is-hidden", state.mode !== "pizza");
     }
+    if (els.modeDescription) {
+      if (state.mode === "sandbox") {
+        els.modeDescription.textContent = TEXT.modeSandbox;
+      } else if (state.mode === "challenge") {
+        els.modeDescription.textContent = TEXT.modeChallenge;
+      } else {
+        els.modeDescription.textContent = TEXT.modePizza;
+      }
+    }
+    updatePizzaUI();
   }
 
   function saveState() {
@@ -815,11 +1509,35 @@
     safeSet(STORAGE.target, JSON.stringify(state.target));
     safeSet(STORAGE.attempts, String(state.attempts));
     safeSet(STORAGE.similarity, state.similarity == null ? "" : String(state.similarity));
+    safeSet(
+      STORAGE.pizza,
+      JSON.stringify({
+        subMode: state.pizza.subMode,
+        radius: state.pizza.radius,
+        thetaDeg: state.pizza.thetaDeg,
+        targetType: state.pizza.targetType,
+        targetValue: state.pizza.targetValue,
+        targetCoeff: state.pizza.targetCoeff,
+        targetThetaDeg: state.pizza.targetThetaDeg,
+        orderText: state.pizza.orderText,
+        calcRadius: state.pizza.calcRadius,
+        calcThetaDeg: state.pizza.calcThetaDeg,
+        calcArcCoeff: state.pizza.calcArcCoeff,
+        calcQuestionType: state.pizza.calcQuestionType,
+        calcTargetCoeff: state.pizza.calcTargetCoeff,
+        calcOrderText: state.pizza.calcOrderText,
+        calcAnswerRaw: state.pizza.calcAnswerRaw,
+        calcAnswerCoeff: state.pizza.calcAnswerCoeff,
+        score: state.pizza.score,
+        level: state.pizza.level,
+        toppings: state.pizza.toppings,
+      })
+    );
   }
 
   function loadState() {
     const mode = safeGet(STORAGE.mode);
-    state.mode = mode === "challenge" ? "challenge" : "sandbox";
+    state.mode = mode === "challenge" || mode === "pizza" ? mode : "sandbox";
 
     state.panelCollapsed = safeGet(STORAGE.panel) === "collapsed";
 
@@ -838,6 +1556,48 @@
 
     const similarityRaw = Number(safeGet(STORAGE.similarity));
     state.similarity = Number.isFinite(similarityRaw) ? similarityRaw : null;
+
+    const pizzaRaw = safeParse(safeGet(STORAGE.pizza), null);
+    if (pizzaRaw && typeof pizzaRaw === "object") {
+      state.pizza.subMode = pizzaRaw.subMode === "calc" ? "calc" : "slice";
+      state.pizza.radius = [8, 9, 10, 11, 12].includes(Number(pizzaRaw.radius)) ? Number(pizzaRaw.radius) : 10;
+      const thetaRaw = Number(pizzaRaw.thetaDeg);
+      state.pizza.thetaDeg = Number.isFinite(thetaRaw) ? clamp(thetaRaw, 0, 360) : 90;
+      state.pizza.targetType = pizzaRaw.targetType === "area" ? "area" : "arc";
+      state.pizza.targetValue = Number.isFinite(Number(pizzaRaw.targetValue)) ? Number(pizzaRaw.targetValue) : 0;
+      state.pizza.targetCoeff = Number.isFinite(Number(pizzaRaw.targetCoeff)) ? Number(pizzaRaw.targetCoeff) : 0;
+      const targetThetaRaw = Number(pizzaRaw.targetThetaDeg);
+      state.pizza.targetThetaDeg = Number.isFinite(targetThetaRaw) ? clamp(targetThetaRaw, 0, 360) : 90;
+      state.pizza.orderText = normalizePiText(typeof pizzaRaw.orderText === "string" ? pizzaRaw.orderText : "");
+      state.pizza.calcRadius = [8, 9, 10, 11, 12].includes(Number(pizzaRaw.calcRadius)) ? Number(pizzaRaw.calcRadius) : 10;
+      const calcThetaRaw = Number(pizzaRaw.calcThetaDeg);
+      state.pizza.calcThetaDeg = Number.isFinite(calcThetaRaw) ? clamp(calcThetaRaw, 0, 360) : 90;
+      state.pizza.calcArcCoeff = Number.isFinite(Number(pizzaRaw.calcArcCoeff))
+        ? Number(pizzaRaw.calcArcCoeff)
+        : (state.pizza.calcThetaDeg * state.pizza.calcRadius) / 180;
+      state.pizza.calcQuestionType =
+        pizzaRaw.calcQuestionType === "lr" || pizzaRaw.calcQuestionType === "lt" ? pizzaRaw.calcQuestionType : "rt";
+      state.pizza.calcTargetCoeff = Number.isFinite(Number(pizzaRaw.calcTargetCoeff))
+        ? Number(pizzaRaw.calcTargetCoeff)
+        : 0;
+      state.pizza.calcOrderText = normalizePiText(typeof pizzaRaw.calcOrderText === "string" ? pizzaRaw.calcOrderText : "");
+      state.pizza.calcAnswerRaw = typeof pizzaRaw.calcAnswerRaw === "string" ? normalizePiText(pizzaRaw.calcAnswerRaw) : "";
+      state.pizza.calcAnswerCoeff = Number.isFinite(Number(pizzaRaw.calcAnswerCoeff))
+        ? Number(pizzaRaw.calcAnswerCoeff)
+        : null;
+      state.pizza.score = Number.isFinite(Number(pizzaRaw.score)) ? Math.max(0, Math.floor(Number(pizzaRaw.score))) : 0;
+      state.pizza.level = Number.isFinite(Number(pizzaRaw.level)) ? Math.max(1, Math.floor(Number(pizzaRaw.level))) : 1;
+      state.pizza.toppings = Array.isArray(pizzaRaw.toppings)
+        ? pizzaRaw.toppings
+            .filter((item) => item && Number.isFinite(Number(item.x)) && Number.isFinite(Number(item.y)))
+            .map((item) => ({
+              x: Number(item.x),
+              y: Number(item.y),
+              r: Number.isFinite(Number(item.r)) ? clamp(Number(item.r), 0.08, 1.2) : 0.3,
+              c: typeof item.c === "string" ? item.c : "#ef4444",
+            }))
+        : [];
+    }
   }
 
   function setPanelCollapsed(collapsed) {
@@ -867,12 +1627,15 @@
 
     if (state.mode === "sandbox") {
       setStatus("readySandbox");
+    } else if (state.mode === "pizza") {
+      setStatus("readyPizza");
     } else {
       setStatus("readyChallenge");
     }
   }
 
   function enterSandbox() {
+    stopPizzaFlash();
     state.mode = "sandbox";
     state.attempts = 0;
     state.similarity = null;
@@ -885,7 +1648,44 @@
     saveState();
   }
 
+  function ensurePizzaOrder() {
+    if (state.pizza.subMode === "calc") {
+      if (!state.pizza.calcOrderText || !Number.isFinite(state.pizza.calcTargetCoeff) || state.pizza.calcTargetCoeff <= 0) {
+        generatePizzaCalcOrder();
+      }
+      return;
+    }
+    if (!state.pizza.orderText || !Number.isFinite(state.pizza.targetValue) || state.pizza.targetValue <= 0) {
+      generatePizzaOrder();
+    }
+  }
+
+  function setPizzaSubMode(mode) {
+    const next = mode === "calc" ? "calc" : "slice";
+    if (state.pizza.subMode === next) return;
+    state.pizza.subMode = next;
+    ensurePizzaOrder();
+    setStatus("readyPizza");
+    updateMetrics();
+    render();
+    saveState();
+  }
+
+  function enterPizzaMode() {
+    stopPizzaFlash();
+    loadPizzaTexture(true);
+    state.mode = "pizza";
+    ensurePizzaOrder();
+    setStatus("readyPizza");
+
+    updateModeUI();
+    updateMetrics();
+    render();
+    saveState();
+  }
+
   function enterChallengeWithNewTarget() {
+    stopPizzaFlash();
     state.mode = "challenge";
     state.target = randomTarget();
     state.player = { ...DEFAULT_PLAYER };
@@ -903,6 +1703,7 @@
   }
 
   function ensureChallengeState() {
+    stopPizzaFlash();
     if (!state.target) {
       state.target = randomTarget();
     }
@@ -959,6 +1760,39 @@
     });
   }
 
+  function bindPizzaControls() {
+    if (els.pizzaAngleSlider) {
+      els.pizzaAngleSlider.addEventListener("input", () => {
+        state.pizza.thetaDeg = clamp(Number(els.pizzaAngleSlider.value), 0, 360);
+        updatePizzaUI();
+        if (state.mode === "pizza") {
+          render();
+          saveState();
+        }
+      });
+    }
+
+    if (els.pizzaSubmodeSliceBtn) {
+      els.pizzaSubmodeSliceBtn.addEventListener("click", () => setPizzaSubMode("slice"));
+    }
+    if (els.pizzaSubmodeCalcBtn) {
+      els.pizzaSubmodeCalcBtn.addEventListener("click", () => setPizzaSubMode("calc"));
+    }
+    if (els.pizzaAreaAnswerInput) {
+      els.pizzaAreaAnswerInput.addEventListener("input", () => {
+        const raw = String(els.pizzaAreaAnswerInput.value || "");
+        state.pizza.calcAnswerRaw = raw;
+        state.pizza.calcAnswerCoeff = parsePizzaAreaAnswerCoeff(raw);
+        saveState();
+      });
+      els.pizzaAreaAnswerInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          submitPizzaAreaAnswer();
+        }
+      });
+    }
+  }
+
   function bindButtons() {
     if (els.modeSandboxBtn) {
       els.modeSandboxBtn.addEventListener("click", enterSandbox);
@@ -966,11 +1800,20 @@
     if (els.modeChallengeBtn) {
       els.modeChallengeBtn.addEventListener("click", enterChallengeWithNewTarget);
     }
+    if (els.modePizzaBtn) {
+      els.modePizzaBtn.addEventListener("click", enterPizzaMode);
+    }
     if (els.newTargetBtn) {
       els.newTargetBtn.addEventListener("click", enterChallengeWithNewTarget);
     }
     if (els.checkMatchBtn) {
       els.checkMatchBtn.addEventListener("click", evaluateMatch);
+    }
+    if (els.pizzaSubmitBtn) {
+      els.pizzaSubmitBtn.addEventListener("click", submitPizzaSlice);
+    }
+    if (els.pizzaAreaSubmitBtn) {
+      els.pizzaAreaSubmitBtn.addEventListener("click", submitPizzaAreaAnswer);
     }
     if (els.resetPlayerBtn) {
       els.resetPlayerBtn.addEventListener("click", resetPlayer);
@@ -1005,8 +1848,10 @@
     initSliderRanges();
     buildTargetGrid();
     bindSliders();
+    bindPizzaControls();
     bindButtons();
     observeVisualMode();
+    loadPizzaTexture();
 
     window.addEventListener("resize", () => {
       resizeCanvas();
@@ -1023,6 +1868,8 @@
 
     if (state.mode === "challenge") {
       ensureChallengeState();
+    } else if (state.mode === "pizza") {
+      enterPizzaMode();
     } else {
       setStatus("readySandbox");
       updateModeUI();

@@ -34,16 +34,35 @@
         aria-label="Advanced goose geometry lab"
         data-text-mode-sandbox="Pure math sandbox: drag all 16 sliders and inspect continuous geometric deformation in real time."
         data-text-mode-challenge="One-play challenge: a random target goose is generated; tune your parameter vector to maximize overlap."
+        data-text-mode-pizza="Pizza Slicer: use the angle slider to cut a sector that matches each customer order."
         data-text-status-ready-sandbox="Sandbox ready. Adjust parameters and observe analytic geometry behavior."
         data-text-status-ready-challenge="Challenge ready. Compare your model with the dashed target and optimize overlap."
+        data-text-status-ready-pizza="Pizza challenge ready. Drag angle and submit your slice."
         data-text-status-new-target="New random target generated; your parameter vector has been reset."
         data-text-status-match-good="Excellent overlap. Similarity = {score}%."
         data-text-status-match-keep="Current similarity = {score}%. Keep tuning."
+        data-text-status-pizza-good="Perfect slice. Pizza score = {score}."
+        data-text-status-pizza-keep="Not exact yet. Error = {error}. Keep adjusting."
+        data-text-status-pizza-calc-good="Correct area. Pizza score = {score}."
+        data-text-status-pizza-calc-keep="Area is off. Coefficient error = {error}."
         data-text-table-param="parameter"
         data-text-table-target="target"
         data-text-table-delta="abs error"
         data-text-legend-player="player"
         data-text-legend-target="target"
+        data-text-pizza-order-arc="Radius R = {radius}. Slice a sector whose arc length equals {value}."
+        data-text-pizza-order-area="Radius R = {radius}. Slice a sector whose area equals {value} cm²."
+        data-text-pizza-radius="Current pizza radius: R = {radius}"
+        data-text-pizza-score="Score"
+        data-text-pizza-arc-label="arc edge"
+        data-text-pizza-radius-label="radius edge"
+        data-text-pizza-submode-slice="Slice Matching"
+        data-text-pizza-submode-calc="Area Calculation"
+        data-text-pizza-calc-order="Given radius R = {radius} and theta = {theta}°, compute the sector area in cm²."
+        data-text-pizza-calc-order-rt="Given radius R = {radius} cm and central angle θ = {theta}°, compute sector area S (cm²)."
+        data-text-pizza-calc-order-lr="Given arc length L = {arc} cm and radius R = {radius} cm, compute sector area S (cm²)."
+        data-text-pizza-calc-order-lt="Given arc length L = {arc} cm and central angle θ = {theta}°, compute sector area S (cm²)."
+        data-text-pizza-calc-hint="Enter area expression."
         data-text-show-panel="Show Panel"
         data-text-hide-panel="Hide Panel"
       >
@@ -56,6 +75,7 @@
           <div class="game-toolbar-actions" role="group" aria-label="Mode and panel controls">
             <button class="btn ghost game-tab-btn" id="mode-sandbox-btn">Sandbox Mode</button>
             <button class="btn ghost game-tab-btn" id="mode-challenge-btn">Goose Coincidence Challenge</button>
+            <button class="btn ghost game-tab-btn" id="mode-pizza-btn">Pizza Slicer Mode</button>
             <button class="btn ghost" id="panel-toggle-btn">Hide Panel</button>
           </div>
         </header>
@@ -68,7 +88,7 @@
               <p class="mode-text" id="status-text" role="status" aria-live="polite"></p>
             </section>
 
-            <section class="game-card">
+            <section class="game-card goose-only-card">
               <h2>Module A - Rotated Ellipse Model</h2>
               <div class="slider-list" id="module-a-sliders">
                 <label class="slider-item" for="param-x1"><span>X1_center</span><output id="value-x1">0.00</output></label>
@@ -103,7 +123,7 @@
               </div>
             </section>
 
-            <section class="game-card">
+            <section class="game-card goose-only-card">
               <h2>Module B - Cubic Bezier Model</h2>
               <div class="slider-list">
                 <label class="slider-item" for="param-l"><span>L</span><output id="value-l">4.20</output></label>
@@ -117,7 +137,7 @@
               </div>
             </section>
 
-            <section class="game-card">
+            <section class="game-card goose-only-card">
               <h2>Module C - Symmetric Ellipse Model</h2>
               <div class="slider-list">
                 <label class="slider-item" for="param-d"><span>D</span><output id="value-d">0.62</output></label>
@@ -135,7 +155,7 @@
               </div>
             </section>
 
-            <section class="game-card equation-card">
+            <section class="game-card equation-card goose-only-card">
               <h2>Equation Console</h2>
               <p><strong>E1</strong> <code id="eq-e1"></code></p>
               <p><strong>E2</strong> <code id="eq-e2"></code></p>
@@ -144,7 +164,7 @@
               <p><strong>E3_pair</strong> <code id="eq-eye"></code></p>
             </section>
 
-            <section class="game-card challenge-card" id="challenge-card">
+            <section class="game-card challenge-card goose-only-card" id="challenge-card">
               <h2>Target Parameter Console</h2>
               <div class="challenge-metrics">
                 <p><strong>Similarity</strong> <span id="similarity-value">--</span></p>
@@ -154,6 +174,43 @@
               <div class="panel-actions">
                 <button class="btn primary" id="new-target-btn">New Random Target</button>
                 <button class="btn ghost" id="check-match-btn">Evaluate Overlap</button>
+              </div>
+            </section>
+
+            <section class="game-card pizza-card is-hidden" id="pizza-card">
+              <h2>Pizza Slicer Challenge</h2>
+              <div class="pizza-submode-switch" role="group" aria-label="Pizza game type">
+                <button class="btn ghost is-active" id="pizza-submode-slice-btn">Slice Matching</button>
+                <button class="btn ghost" id="pizza-submode-calc-btn">Area Calculation</button>
+              </div>
+              <div class="pizza-metrics">
+                <p><strong>Score</strong> <span id="pizza-score-value">0</span></p>
+              </div>
+
+              <div class="pizza-section" id="pizza-slice-section">
+                <p class="pizza-order-text" id="pizza-order-text"></p>
+                <p class="pizza-radius-text" id="pizza-radius-text"></p>
+                <div class="slider-list pizza-slider-wrap">
+                  <label class="slider-item" for="pizza-angle-slider">
+                    <span>Slice Angle (theta)</span>
+                    <output id="pizza-angle-value">90°</output>
+                  </label>
+                  <input id="pizza-angle-slider" type="range" min="0" max="360" step="1" value="90" />
+                </div>
+                <div class="panel-actions">
+                  <button class="btn primary" id="pizza-submit-btn">Submit Slice</button>
+                </div>
+              </div>
+
+              <div class="pizza-section is-hidden" id="pizza-calc-section">
+                <p class="pizza-order-text" id="pizza-calc-order-text"></p>
+                <div class="pizza-answer-row">
+                  <label for="pizza-area-answer-input">S = </label>
+                  <input id="pizza-area-answer-input" type="text" inputmode="text" placeholder="Enter S" />
+                </div>
+                <div class="panel-actions">
+                  <button class="btn primary" id="pizza-area-submit-btn">Submit Area</button>
+                </div>
               </div>
             </section>
           </aside>

@@ -179,6 +179,98 @@
   color: var(--text);
 }
 
+.pizza-card {
+  border-color: color-mix(in srgb, var(--primary) 44%, var(--line));
+  background: linear-gradient(160deg, rgba(249, 115, 22, 0.08), transparent 54%), var(--bg-alt);
+}
+
+.pizza-submode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.34rem;
+  margin-bottom: 0.42rem;
+}
+
+.pizza-submode-switch .btn.is-active {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+.pizza-order-text {
+  margin: 0;
+  padding: 0.45rem 0.56rem;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.86rem;
+  line-height: 1.42;
+  background: rgba(255, 255, 255, 0.66);
+}
+
+.pizza-radius-text {
+  margin: 0.42rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.pizza-metrics {
+  margin-top: 0.42rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.pizza-metrics p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.86rem;
+  color: var(--text);
+}
+
+#pizza-score-value {
+  color: #ea580c;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.pizza-slider-wrap {
+  margin-top: 0.4rem;
+}
+
+#pizza-angle-slider {
+  accent-color: #ea580c;
+}
+
+.pizza-section + .pizza-section {
+  margin-top: 0.48rem;
+}
+
+.pizza-answer-row {
+  margin-top: 0.44rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.pizza-answer-row label {
+  font-size: 0.9rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+#pizza-area-answer-input {
+  width: 100%;
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.24rem 0.46rem;
+  font-size: 0.92rem;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.75);
+}
+
 .target-grid {
   margin-top: 0.44rem;
   border: 1px solid var(--line);
@@ -291,6 +383,10 @@
   display: inline-flex !important;
 }
 
+.game-root.is-pizza-mode .goose-only-card {
+  display: none;
+}
+
 [data-theme="dark"] .game-left-panel {
   background: rgba(15, 23, 42, 0.92);
 }
@@ -311,6 +407,22 @@
   color: #f87171;
 }
 
+[data-theme="dark"] .pizza-card {
+  background: linear-gradient(160deg, rgba(249, 115, 22, 0.16), transparent 56%), var(--bg-alt);
+}
+
+[data-theme="dark"] .pizza-order-text {
+  background: rgba(15, 23, 42, 0.44);
+}
+
+[data-theme="dark"] #pizza-area-answer-input {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+[data-theme="dark"] #pizza-score-value {
+  color: #fb923c;
+}
+
 [data-contrast="cb"] .game-tab-btn.is-active {
   background: #005eb8 !important;
   border-color: #005eb8 !important;
@@ -318,6 +430,53 @@
 
 [data-contrast="cb"] .target-row.header {
   background: rgba(0, 94, 184, 0.18);
+}
+
+[data-contrast="cb"] .pizza-card {
+  border-color: #005eb8;
+  background: linear-gradient(160deg, rgba(0, 94, 184, 0.11), transparent 60%), var(--bg-alt);
+}
+
+[data-contrast="cb"] #pizza-angle-slider {
+  accent-color: #005eb8;
+}
+
+[data-contrast="cb"] #pizza-score-value {
+  color: #005eb8;
+}
+
+[data-contrast="cb"] .pizza-submode-switch .btn.is-active {
+  background: #005eb8 !important;
+  border-color: #005eb8 !important;
+}
+
+[data-theme="dark"][data-contrast="cb"] .game-tab-btn.is-active {
+  background: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+  color: #071522 !important;
+}
+
+[data-theme="dark"][data-contrast="cb"] .pizza-submode-switch .btn.is-active {
+  background: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+  color: #071522 !important;
+}
+
+[data-theme="dark"][data-contrast="cb"] .target-row.header {
+  background: rgba(56, 189, 248, 0.2);
+}
+
+[data-theme="dark"][data-contrast="cb"] .pizza-card {
+  border-color: #67e8f9;
+  background: linear-gradient(160deg, rgba(56, 189, 248, 0.16), transparent 60%), var(--bg-alt);
+}
+
+[data-theme="dark"][data-contrast="cb"] #pizza-angle-slider {
+  accent-color: #38bdf8;
+}
+
+[data-theme="dark"][data-contrast="cb"] #pizza-score-value {
+  color: #7dd3fc;
 }
 
 @media (max-width: 1240px) {
