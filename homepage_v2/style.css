@@ -1,0 +1,525 @@
+:root {
+  --bg: #f6f1e8;
+  --surface: rgba(255, 252, 246, 0.92);
+  --text: #132238;
+  --muted: #56677c;
+  --primary: #1d4ed8;
+  --accent: #f59e0b;
+  --line: #aab8ca;
+  --line-strong: #22446f;
+  --card: #fffdf8;
+  --shadow: 0 22px 48px rgba(19, 34, 56, 0.12);
+  --radius: 20px;
+}
+
+html {
+  font-size: 16px;
+}
+
+[data-theme="dark"] {
+  --bg: #09111d;
+  --surface: rgba(14, 25, 42, 0.9);
+  --text: #eff6ff;
+  --muted: #c7d4e7;
+  --primary: #60a5fa;
+  --accent: #f6bd60;
+  --line: #33475f;
+  --line-strong: #7dd3fc;
+  --card: #101b2e;
+}
+
+[data-theme="eye"] {
+  --bg: #f3efdf;
+  --surface: rgba(252, 248, 232, 0.95);
+  --text: #1f2937;
+  --muted: #51606d;
+  --primary: #0f766e;
+  --accent: #d97706;
+  --line: #b6bea7;
+  --line-strong: #4d6b5d;
+  --card: #fffcf2;
+}
+
+[data-contrast="cb"] {
+  --primary: #0f766e;
+  --accent: #dc2626;
+  --line-strong: #0f766e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Avenir Next", "Trebuchet MS", "Verdana", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(29, 78, 216, 0.14), transparent 34%),
+    linear-gradient(180deg, #fbf8f2 0%, var(--bg) 100%);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 2.2rem;
+  background: var(--surface);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(170, 184, 202, 0.55);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 700;
+}
+
+.logo-mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: conic-gradient(from 135deg, var(--accent), var(--primary), var(--accent));
+  box-shadow: inset 0 0 0 0.35rem var(--card);
+}
+
+.breadcrumb,
+.tools,
+.footer-links,
+.hero-actions,
+.badge-row,
+.privacy-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.breadcrumb {
+  color: var(--muted);
+  justify-self: center;
+}
+
+.breadcrumb-current {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.tools {
+  justify-content: flex-end;
+}
+
+.tool-btn,
+.badge {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--muted);
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+main {
+  padding: 2rem 2.2rem 5rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  align-items: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.55rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.hero h1,
+.section-header h2 {
+  margin: 0;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  line-height: 1.08;
+}
+
+.hero-sub,
+.section-header p,
+.proto-note,
+.card p {
+  color: var(--muted);
+}
+
+.hero-sub {
+  max-width: 37rem;
+  font-size: 1.08rem;
+}
+
+.btn,
+.geobot-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 0.8rem 1.35rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn.primary,
+.geobot-btn.primary,
+.carousel-btn,
+.geobot-fab {
+  border: none;
+  background: var(--primary);
+  color: #fff;
+}
+
+.btn.ghost,
+.geobot-btn.ghost,
+.geobot-chip {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+}
+
+.hero-visual,
+.proto-note,
+.carousel-shell,
+.card,
+.geobot-panel {
+  background: var(--surface);
+  border: 1px solid rgba(170, 184, 202, 0.55);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.hero-visual {
+  padding: 1.5rem;
+}
+
+.hero-visual text {
+  fill: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.proto-note {
+  margin-top: 1.8rem;
+  padding: 1rem 1.15rem;
+}
+
+.section-header {
+  margin: 3.4rem 0 1.2rem;
+}
+
+.section-header p {
+  margin: 0 0 0.45rem;
+}
+
+.carousel-shell {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.3rem;
+}
+
+.carousel-track {
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  margin: 0;
+  text-align: center;
+}
+
+.slide.is-active {
+  display: block;
+}
+
+.slide img {
+  margin: 0 auto;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+}
+
+.slide figcaption {
+  margin-top: 0.9rem;
+  color: var(--muted);
+}
+
+.carousel-btn {
+  width: 2.9rem;
+  height: 2.9rem;
+  border-radius: 50%;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.1rem;
+}
+
+.card {
+  padding: 1.3rem;
+  background: var(--card);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.65rem;
+}
+
+.card p {
+  margin: 0;
+}
+
+.geobot {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+}
+
+.geobot-fab {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  box-shadow: var(--shadow);
+  font-size: 22px;
+}
+
+.geobot-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--card);
+}
+
+.geobot-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  width: min(360px, 92vw);
+  display: none;
+  overflow: hidden;
+}
+
+.geobot-panel.is-open {
+  display: block;
+}
+
+.geobot-header,
+.geobot-body,
+.geobot-quick,
+.geobot-form {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.geobot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.95rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.geobot-title {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.geobot-badge {
+  font-weight: 700;
+}
+
+.geobot-subtitle {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.geobot-close {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.geobot-body {
+  display: grid;
+  gap: 0.6rem;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-top: 0.95rem;
+  padding-bottom: 0.95rem;
+}
+
+.geobot-msg {
+  padding: 0.6rem 0.8rem;
+  border-radius: 14px;
+  background: rgba(29, 78, 216, 0.12);
+}
+
+.geobot-msg.sub {
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.geobot-quick {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-top: 0.3rem;
+  padding-bottom: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+
+.geobot-chip {
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+}
+
+.geobot-form {
+  display: none;
+  gap: 0.5rem;
+  padding-top: 0.85rem;
+  padding-bottom: 1rem;
+}
+
+.geobot-form label {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.geobot-form input,
+.geobot-form textarea {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  background: var(--card);
+  color: var(--text);
+}
+
+.geobot-form-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.geobot-warning {
+  display: none;
+  border-radius: 10px;
+  padding: 0.5rem 0.7rem;
+  background: rgba(220, 38, 38, 0.12);
+  color: #b91c1c;
+  font-size: 0.78rem;
+}
+
+.privacy-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  background: var(--surface);
+  border-top: 1px solid rgba(170, 184, 202, 0.55);
+  box-shadow: 0 -10px 22px rgba(19, 34, 56, 0.08);
+}
+
+.site-footer {
+  padding: 2rem 2.2rem 6.4rem;
+  border-top: 1px solid rgba(170, 184, 202, 0.55);
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .breadcrumb,
+  .tools {
+    justify-self: start;
+  }
+}
+
+@media (max-width: 640px) {
+  main,
+  .site-footer {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
+
+  .site-header {
+    padding: 1rem 1.2rem;
+  }
+
+  .carousel-shell,
+  .privacy-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    grid-template-columns: 1fr;
+  }
+
+  .geobot {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .geobot-panel {
+    left: 16px;
+    right: 16px;
+    width: auto;
+  }
+}

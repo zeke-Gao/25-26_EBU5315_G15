@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CircleSense v2 | 首页原型</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="light" data-font="md" data-contrast="normal" data-lang="zh">
+    <header class="site-header">
+      <a class="logo" href="index-zh.html" aria-label="CircleSense v2 首页">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">CircleSense v2</span>
+      </a>
+      <nav class="breadcrumb" aria-label="面包屑">
+        <a href="index-zh.html">主页</a>
+        <span aria-hidden="true">›</span>
+        <span class="breadcrumb-current">原型实现</span>
+      </nav>
+      <div class="tools" role="group" aria-label="无障碍工具">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false">主题：明亮</button>
+        <button class="tool-btn" id="font-toggle" aria-pressed="false">字体：标准</button>
+        <a class="tool-btn" href="index.html">EN</a>
+        <button class="tool-btn" id="cb-toggle" aria-pressed="false">颜色：标准</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow">Stage 2 原型</p>
+          <h1>以视觉稿为核心、但已经带有首页基础交互能力的原型版本。</h1>
+          <p class="hero-sub">
+            这个版本仍然突出主视觉和图示轮播，但已经保留主题切换、字体/对比度、GeoBot 和隐私提示这些从更早版本继承下来的首页能力。
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#slides">查看图示</a>
+            <a class="btn ghost" href="#notes">查看说明</a>
+          </div>
+          <div class="badge-row" aria-label="原型亮点">
+            <span class="badge">SVG 图示</span>
+            <span class="badge">主题工具</span>
+            <span class="badge">GeoBot 入口</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 320" role="img" aria-label="装饰性圆几何主视觉">
+            <defs>
+              <linearGradient id="v2-glow-zh" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--accent)" />
+                <stop offset="100%" stop-color="var(--primary)" />
+              </linearGradient>
+            </defs>
+            <circle cx="160" cy="160" r="118" fill="none" stroke="url(#v2-glow-zh)" stroke-width="7" />
+            <line x1="40" y1="160" x2="280" y2="160" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round" />
+            <line x1="160" y1="42" x2="160" y2="278" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 6" />
+            <line x1="160" y1="160" x2="260" y2="94" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" />
+            <circle cx="160" cy="160" r="4" fill="var(--accent)" />
+            <text x="28" y="178">A</text>
+            <text x="282" y="178">B</text>
+            <text x="148" y="178">O</text>
+            <text x="264" y="98">半径 r</text>
+            <text x="120" y="30">弧 AB</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="proto-note">
+        <strong>原型说明：</strong>
+        v2 不再是纯静态展示页，而是已经具备首页主壳层功能的原型；后续的 v3 再补充更完整的信息结构和支持页面。
+      </section>
+
+      <section class="slides" id="slides">
+        <div class="section-header">
+          <p class="eyebrow">图示集合</p>
+          <h2>为首页轮播准备的定理图示</h2>
+        </div>
+        <div class="carousel-shell">
+          <button class="carousel-btn" id="prev-slide" aria-label="上一张">◀</button>
+          <div class="carousel-track">
+            <figure class="slide is-active">
+              <img src="assets/diagrams/slide-1-diameter.svg" alt="直径与半径关系图" />
+              <figcaption>直径始终是半径的两倍。</figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="assets/diagrams/slide-2-central-inscribed.svg" alt="圆心角与圆周角关系图" />
+              <figcaption>同弧上，圆心角是圆周角的两倍。</figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="assets/diagrams/slide-3-tangent-radius.svg" alt="切线与半径垂直图" />
+              <figcaption>切线与过切点的半径互相垂直。</figcaption>
+            </figure>
+          </div>
+          <button class="carousel-btn" id="next-slide" aria-label="下一张">▶</button>
+        </div>
+      </section>
+
+      <section class="knowledge" id="notes">
+        <div class="section-header">
+          <p class="eyebrow">设计说明</p>
+          <h2>这个版本希望先帮学生看清什么</h2>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>先有主视觉</h3>
+            <p>先用强视觉降低“圆几何太抽象”的第一印象。</p>
+          </article>
+          <article class="card">
+            <h3>再用轮播记忆</h3>
+            <p>把关键定理压缩成图示化轮播，更适合快速扫读。</p>
+          </article>
+          <article class="card">
+            <h3>保留首页主壳层</h3>
+            <p>主题、字体、对比度、GeoBot 和隐私横幅在这个原型里已经存在。</p>
+          </article>
+          <article class="card">
+            <h3>实现仍然较轻</h3>
+            <p>更完整的支持页面和信息结构留到后续的 v3 版本。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="knowledge">
+        <div class="section-header">
+          <p class="eyebrow">核心规则</p>
+          <h2>卡片式复习结构草案</h2>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>半圆所对角</h3>
+            <p>直径所对的圆周角恒为 90°。</p>
+          </article>
+          <article class="card">
+            <h3>圆内接四边形</h3>
+            <p>圆内接四边形的对角和为 180°。</p>
+          </article>
+          <article class="card">
+            <h3>切线性质</h3>
+            <p>切点处的半径与切线互相垂直。</p>
+          </article>
+          <article class="card">
+            <h3>等弦等距</h3>
+            <p>同圆内等弦到圆心的距离相等。</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="geobot">
+      <button class="geobot-fab" id="geobot-fab" aria-label="打开 GeoBot 聊天">
+        <span class="geobot-icon" aria-hidden="true">◎</span>
+        <span class="geobot-dot" id="geobot-dot" aria-hidden="true"></span>
+      </button>
+      <aside class="geobot-panel" id="geobot-panel" aria-live="polite">
+        <header class="geobot-header">
+          <div class="geobot-title">
+            <span class="geobot-badge">GeoBot</span>
+            <span class="geobot-subtitle">原型助手</span>
+          </div>
+          <button class="geobot-close" id="geobot-close" aria-label="关闭聊天">×</button>
+        </header>
+        <div class="geobot-body" id="geobot-body"></div>
+        <div class="geobot-quick" id="geobot-quick">
+          <button class="geobot-chip" data-action="learn">学习定理</button>
+          <button class="geobot-chip" data-action="design">查看图示</button>
+          <button class="geobot-chip" data-action="contact">联系我们</button>
+        </div>
+        <form class="geobot-form" id="geobot-form" novalidate>
+          <label>
+            <span>姓名</span>
+            <input type="text" name="name" required placeholder="请输入姓名" />
+          </label>
+          <label>
+            <span>邮箱</span>
+            <input type="email" name="email" required placeholder="you@email.com" />
+          </label>
+          <label>
+            <span>留言</span>
+            <textarea name="message" rows="3" required placeholder="询问这个首页原型的设计思路…"></textarea>
+          </label>
+          <div class="geobot-warning" id="geobot-warning" role="alert" aria-live="polite"></div>
+          <div class="geobot-form-actions">
+            <button type="submit" class="geobot-btn primary">提交</button>
+            <button type="button" class="geobot-btn ghost" id="geobot-clear">清空</button>
+            <button type="button" class="geobot-btn ghost" id="geobot-back">返回</button>
+          </div>
+        </form>
+      </aside>
+    </div>
+
+    <div class="privacy-banner" id="privacy-banner" role="region" aria-label="隐私提示">
+      <p>这个原型只在本地保存显示偏好设置，用于主题、字体和对比度切换。</p>
+      <div class="privacy-actions">
+        <button class="btn primary" id="accept-privacy">同意</button>
+        <button class="btn ghost" id="dismiss-privacy">稍后</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>CircleSense v2 首页原型</p>
+      <div class="footer-links">
+        <a href="#top">返回顶部</a>
+        <a href="#slides">图示</a>
+        <a href="#notes">说明</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

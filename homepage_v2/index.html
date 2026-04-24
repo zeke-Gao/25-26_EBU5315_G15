@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CircleSense v2 | Homepage Prototype</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-theme="light" data-font="md" data-contrast="normal" data-lang="en">
+    <header class="site-header">
+      <a class="logo" href="index.html" aria-label="CircleSense v2 homepage">
+        <span class="logo-mark" aria-hidden="true"></span>
+        <span class="logo-text">CircleSense v2</span>
+      </a>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span aria-hidden="true">›</span>
+        <span class="breadcrumb-current">Prototype Build</span>
+      </nav>
+      <div class="tools" role="group" aria-label="Accessibility tools">
+        <button class="tool-btn" id="theme-toggle" aria-pressed="false">Theme: Light</button>
+        <button class="tool-btn" id="font-toggle" aria-pressed="false">Font: Normal</button>
+        <a class="tool-btn" href="index-zh.html">中文</a>
+        <button class="tool-btn" id="cb-toggle" aria-pressed="false">Color: Standard</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="hero-copy">
+          <p class="eyebrow">Stage 2 Prototype</p>
+          <h1>A visual-first homepage prototype with the core learner-facing controls already in place.</h1>
+          <p class="hero-sub">
+            This version keeps the visual artefacts at the centre while already including theme
+            controls, a lightweight GeoBot widget, and a privacy banner carried over from the
+            earlier build.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#slides">Explore the visuals</a>
+            <a class="btn ghost" href="#notes">View layout notes</a>
+          </div>
+          <div class="badge-row" aria-label="Prototype highlights">
+            <span class="badge">SVG diagrams</span>
+            <span class="badge">Theme tools</span>
+            <span class="badge">GeoBot entry</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg viewBox="0 0 320 320" role="img" aria-label="Decorative circle geometry hero art">
+            <defs>
+              <linearGradient id="v2-glow" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="var(--accent)" />
+                <stop offset="100%" stop-color="var(--primary)" />
+              </linearGradient>
+            </defs>
+            <circle cx="160" cy="160" r="118" fill="none" stroke="url(#v2-glow)" stroke-width="7" />
+            <line x1="40" y1="160" x2="280" y2="160" stroke="var(--line-strong)" stroke-width="4" stroke-linecap="round" />
+            <line x1="160" y1="42" x2="160" y2="278" stroke="var(--line)" stroke-width="2" stroke-dasharray="6 6" />
+            <line x1="160" y1="160" x2="260" y2="94" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" />
+            <circle cx="160" cy="160" r="4" fill="var(--accent)" />
+            <text x="28" y="178">A</text>
+            <text x="282" y="178">B</text>
+            <text x="148" y="178">O</text>
+            <text x="264" y="98">radius r</text>
+            <text x="112" y="30">arc AB</text>
+          </svg>
+        </div>
+      </section>
+
+      <section class="proto-note">
+        <strong>Prototype note:</strong>
+        v2 is no longer only a static visual board. It already includes the core homepage shell,
+        while the later v3 build expands the information architecture and supporting pages.
+      </section>
+
+      <section class="slides" id="slides">
+        <div class="section-header">
+          <p class="eyebrow">Artefact Set</p>
+          <h2>Homepage carousel diagrams drafted for quick theorem recall</h2>
+        </div>
+        <div class="carousel-shell">
+          <button class="carousel-btn" id="prev-slide" aria-label="Previous slide">◀</button>
+          <div class="carousel-track">
+            <figure class="slide is-active">
+              <img src="assets/diagrams/slide-1-diameter.svg" alt="Diameter and radius diagram" />
+              <figcaption>Diameter is always twice the radius.</figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="assets/diagrams/slide-2-central-inscribed.svg" alt="Central and inscribed angle relationship" />
+              <figcaption>The angle at the centre is twice the angle at the circumference.</figcaption>
+            </figure>
+            <figure class="slide">
+              <img src="assets/diagrams/slide-3-tangent-radius.svg" alt="Tangent and radius right angle" />
+              <figcaption>Tangent lines meet the radius at ninety degrees.</figcaption>
+            </figure>
+          </div>
+          <button class="carousel-btn" id="next-slide" aria-label="Next slide">▶</button>
+        </div>
+      </section>
+
+      <section class="knowledge" id="notes">
+        <div class="section-header">
+          <p class="eyebrow">Design Notes</p>
+          <h2>What this version tries to make clearer for learners</h2>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Hero first</h3>
+            <p>Use a bold diagrammatic hero so circle geometry feels visual instead of abstract.</p>
+          </article>
+          <article class="card">
+            <h3>Carousel second</h3>
+            <p>Keep theorem explanation compact and image-led so students can scan quickly.</p>
+          </article>
+          <article class="card">
+            <h3>Accessible shell retained</h3>
+            <p>Theme, font, contrast, chatbot entry, and privacy notice already stay visible in this prototype.</p>
+          </article>
+          <article class="card">
+            <h3>Implementation still light</h3>
+            <p>Supporting pages and deeper homepage content are deferred to the fuller v3 implementation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="knowledge">
+        <div class="section-header">
+          <p class="eyebrow">Core Rules</p>
+          <h2>Drafted card layout for quick revision</h2>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Angle in a Semicircle</h3>
+            <p>An angle subtended by a diameter is always 90 degrees.</p>
+          </article>
+          <article class="card">
+            <h3>Cyclic Quadrilateral</h3>
+            <p>Opposite angles in a cyclic quadrilateral add up to 180 degrees.</p>
+          </article>
+          <article class="card">
+            <h3>Tangent Property</h3>
+            <p>The radius at the point of contact is perpendicular to the tangent.</p>
+          </article>
+          <article class="card">
+            <h3>Equal Chords</h3>
+            <p>Equal chords are the same distance from the centre.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <div class="geobot">
+      <button class="geobot-fab" id="geobot-fab" aria-label="Open GeoBot chatbot">
+        <span class="geobot-icon" aria-hidden="true">◎</span>
+        <span class="geobot-dot" id="geobot-dot" aria-hidden="true"></span>
+      </button>
+      <aside class="geobot-panel" id="geobot-panel" aria-live="polite">
+        <header class="geobot-header">
+          <div class="geobot-title">
+            <span class="geobot-badge">GeoBot</span>
+            <span class="geobot-subtitle">Prototype helper</span>
+          </div>
+          <button class="geobot-close" id="geobot-close" aria-label="Close chat">×</button>
+        </header>
+        <div class="geobot-body" id="geobot-body"></div>
+        <div class="geobot-quick" id="geobot-quick">
+          <button class="geobot-chip" data-action="learn">Learn Rules</button>
+          <button class="geobot-chip" data-action="design">See Artefacts</button>
+          <button class="geobot-chip" data-action="contact">Contact Us</button>
+        </div>
+        <form class="geobot-form" id="geobot-form" novalidate>
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" required placeholder="Your name" />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" required placeholder="you@email.com" />
+          </label>
+          <label>
+            <span>Message</span>
+            <textarea name="message" rows="3" required placeholder="Ask about the homepage prototype..."></textarea>
+          </label>
+          <div class="geobot-warning" id="geobot-warning" role="alert" aria-live="polite"></div>
+          <div class="geobot-form-actions">
+            <button type="submit" class="geobot-btn primary">Submit</button>
+            <button type="button" class="geobot-btn ghost" id="geobot-clear">Clear</button>
+            <button type="button" class="geobot-btn ghost" id="geobot-back">Back</button>
+          </div>
+        </form>
+      </aside>
+    </div>
+
+    <div class="privacy-banner" id="privacy-banner" role="region" aria-label="Privacy notice">
+      <p>We use local storage only to remember display preferences during the prototype review.</p>
+      <div class="privacy-actions">
+        <button class="btn primary" id="accept-privacy">Accept</button>
+        <button class="btn ghost" id="dismiss-privacy">Later</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <p>CircleSense v2 homepage prototype</p>
+      <div class="footer-links">
+        <a href="#top">Back to top</a>
+        <a href="#slides">Artefacts</a>
+        <a href="#notes">Notes</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
